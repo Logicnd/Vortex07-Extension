@@ -51,6 +51,7 @@
     { href: "/catalog", text: "Catalog", actionSel: "a[href=\"/catalog\"]" },
     { href: "profile", text: "MyVortex", actionSel: "#my-profile-btn", rename: true },
     { href: "/settings", text: "Settings", actionSel: "a[href=\"/settings\"]" },
+    { href: "/__v07_forums__", text: "Forums", v07Forum: true },
     { href: "/terms", text: "Terms" },
     { href: "/privacy", text: "Privacy" }
   ];
@@ -166,6 +167,7 @@
     if (spec.href === "profile") {
       return resolveProfileHref() || window.location.origin + "/home";
     }
+    if (spec.v07Forum) return "#";
     if (spec.external) {
       return spec.href;
     }
@@ -202,6 +204,7 @@
   }
 
   function isNavPathActive(spec, currentPath, linkEl) {
+    if (spec.v07Forum) return false;
     if (spec.href === "profile") {
       if (linkEl?.href) {
         try {
@@ -269,6 +272,7 @@
       }
 
       el.href = navHref(spec);
+      if (spec.v07Forum) el.dataset.v07Forum = "1";
       if (spec.href === "profile") {
         applyProfileHref(el);
       }
@@ -1415,65 +1419,6 @@
     return side;
   }
 
-  function syncHomePortal(page) {
-    let portal = page.querySelector(".v07-home-robricks");
-    if (!portal) {
-      portal = document.createElement("div");
-      portal.className = "v07-home-robricks";
-      portal.dataset.v07Injected = "1";
-      portal.innerHTML =
-        '<div class="v07-home-robricks-main">' +
-          '<h2>Welcome to Vortex07</h2>' +
-          '<p>Classic Vortex places for a classic 2007-style web skin. Browse places, check your friends, and jump into something blocky.</p>' +
-        "</div>" +
-        '<div class="v07-home-robricks-side">' +
-          "<h2>New Places</h2>" +
-          '<ol class="v07-home-places"></ol>' +
-        "</div>";
-
-      const insertPoint =
-        page.querySelector(".v07-home-status")?.nextElementSibling ||
-        page.querySelector(".v07-home-welcome")?.nextElementSibling ||
-        findHomeInsertPoint(page);
-      if (insertPoint) insertPoint.before(portal);
-      else page.prepend(portal);
-    }
-
-    const loggedOut = isLoggedOut();
-    const existingAuth = portal.querySelector(".v07-home-auth-panel");
-    const existingPlaces = portal.querySelector(".v07-home-robricks-side:not(.v07-home-auth-panel)");
-
-    if (loggedOut) {
-      existingPlaces?.remove();
-      if (!existingAuth) portal.appendChild(buildAuthPanel());
-      return;
-    }
-
-    existingAuth?.remove();
-
-    const list = portal.querySelector(".v07-home-places");
-    if (!list) return;
-    list.replaceChildren();
-
-    const cards = homePlaceCards(page);
-    if (!cards.length) {
-      const item = document.createElement("li");
-      item.textContent = "Check back soon.";
-      list.appendChild(item);
-      return;
-    }
-
-    cards.forEach((card) => {
-      const item = document.createElement("li");
-      const link = document.createElement("a");
-      const title = card.querySelector(".game-card-title")?.textContent.trim() || card.textContent.trim() || "Untitled Place";
-      link.textContent = title;
-      link.href = card.href || card.querySelector("a")?.href || "#";
-      item.appendChild(link);
-      list.appendChild(item);
-    });
-  }
-
   function updateHomeSectionTitles(page) {
     const headers = Array.from(page.querySelectorAll(".section-header"));
     headers.forEach((header, index) => {
@@ -1543,8 +1488,6 @@
         card.style.display = "";
       });
     }
-
-    syncHomePortal(page);
 
     if (!cfg.liveStats) restoreGameMeta(page);
 
@@ -2679,6 +2622,303 @@
     }
   }
 
+  const FORUM_API = "https://vortex07.vercel.app/api/forums";
+  const FORUM_CATEGORIES = [
+    { id: "general",  label: "General",       description: "General Vortex chat." },
+    { id: "places",   label: "Places",        description: "Talk about games and places." },
+    { id: "help",     label: "Help & Support", description: "Need a hand? Ask here." },
+    { id: "offtopic", label: "Off Topic",     description: "Anything goes." },
+    { id: "vortex07", label: "Vortex07",      description: "Extension feedback, bugs and ideas." }
+  ];
+
+  let forumOpen = false;
+  let forumView = null;
+
+  function forumUsername() {
+    return resolveDisplayName() || sessionStorage.getItem("v07-username") || "Guest";
+  }
+
+  function forumTimeAgo(ts) {
+    const diff = Date.now() - Number(ts);
+    const m = Math.floor(diff / 60000);
+    if (m < 1) return "just now";
+    if (m < 60) return `${m}m ago`;
+    const h = Math.floor(m / 60);
+    if (h < 24) return `${h}h ago`;
+    return `${Math.floor(h / 24)}d ago`;
+  }
+
+  async function forumFetch(path, opts = {}) {
+    try {
+      const res = await fetch(FORUM_API + path, {
+        headers: { "Content-Type": "application/json" },
+        ...opts
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  }
+
+  function getOrMakeForumMount() {
+    let mount = document.getElementById("v07-forum-mount");
+    if (!mount) {
+      mount = document.createElement("div");
+      mount.id = "v07-forum-mount";
+      mount.dataset.v07Injected = "1";
+      document.body.appendChild(mount);
+    }
+    return mount;
+  }
+
+  function closeForumOverlay() {
+    forumOpen = false;
+    forumView = null;
+    document.getElementById("v07-forum-mount")?.remove();
+    document.querySelector(".v07-nav-link[data-v07-forum]")?.classList.remove("v07-nav-active");
+  }
+
+  function forumBreadcrumb(parts) {
+    return parts.map((p, i) =>
+      i < parts.length - 1
+        ? `<a class="v07-forum-bc-link" data-action="${p.action}">${escapeHtml(p.label)}</a>`
+        : `<span>${escapeHtml(p.label)}</span>`
+    ).join(" &rsaquo; ");
+  }
+
+  function renderForumShell(breadcrumbs, innerHtml) {
+    const mount = getOrMakeForumMount();
+    mount.innerHTML =
+      `<div class="v07-forum-overlay">` +
+        `<div class="v07-forum-box">` +
+          `<div class="v07-forum-topbar">` +
+            `<span class="v07-forum-title">Vortex07 Forums</span>` +
+            `<button class="v07-forum-close" data-action="close" title="Close">&times;</button>` +
+          `</div>` +
+          `<div class="v07-forum-bc">${breadcrumbs}</div>` +
+          `<div class="v07-forum-body">${innerHtml}</div>` +
+        `</div>` +
+      `</div>`;
+
+    mount.querySelectorAll("[data-action]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        handleForumAction(el.dataset.action, el.dataset);
+      });
+    });
+  }
+
+  function renderForumLoading() {
+    renderForumShell(
+      forumBreadcrumb([{ label: "Forums" }]),
+      `<div class="v07-forum-loading">Loading...</div>`
+    );
+  }
+
+  async function renderForumIndex() {
+    forumView = "index";
+    renderForumLoading();
+    const data = await forumFetch("/categories");
+    const cats = data?.categories || FORUM_CATEGORIES;
+
+    const rows = cats.map((cat) =>
+      `<tr class="v07-forum-cat-row" data-action="category" data-cat="${escapeHtml(cat.id)}">` +
+        `<td class="v07-forum-cat-icon">&#128172;</td>` +
+        `<td class="v07-forum-cat-info">` +
+          `<a class="v07-forum-cat-name" data-action="category" data-cat="${escapeHtml(cat.id)}">${escapeHtml(cat.label)}</a>` +
+          `<p class="v07-forum-cat-desc">${escapeHtml(cat.description)}</p>` +
+        `</td>` +
+        `<td class="v07-forum-cat-count">${cat.threadCount ?? 0} threads</td>` +
+      `</tr>`
+    ).join("");
+
+    renderForumShell(
+      forumBreadcrumb([{ label: "Forums" }]),
+      `<table class="v07-forum-table"><tbody>${rows}</tbody></table>`
+    );
+  }
+
+  async function renderForumCategory(catId, page = 1) {
+    forumView = { type: "category", catId, page };
+    const cat = FORUM_CATEGORIES.find((c) => c.id === catId) || { id: catId, label: catId };
+    renderForumLoading();
+
+    const data = await forumFetch(`/threads?category=${catId}&page=${page}`);
+    const threads = data?.threads || [];
+
+    const rows = threads.length
+      ? threads.map((t) =>
+          `<tr class="v07-forum-thread-row" data-action="thread" data-tid="${escapeHtml(t.id)}" data-cat="${escapeHtml(catId)}">` +
+            `<td class="v07-forum-thread-icon">${t.pinned === "1" ? "&#128204;" : "&#128196;"}</td>` +
+            `<td class="v07-forum-thread-info">` +
+              `<a class="v07-forum-thread-title" data-action="thread" data-tid="${escapeHtml(t.id)}" data-cat="${escapeHtml(catId)}">${escapeHtml(t.title)}</a>` +
+              `<p class="v07-forum-thread-meta">by ${escapeHtml(t.author)} &mdash; ${forumTimeAgo(t.createdAt)}</p>` +
+            `</td>` +
+            `<td class="v07-forum-thread-replies">${t.replyCount || 0} replies</td>` +
+          `</tr>`
+        ).join("")
+      : `<tr><td colspan="3" class="v07-forum-empty">No threads yet. Be the first to post!</td></tr>`;
+
+    const newBtn = `<button class="v07-forum-new-btn" data-action="new-thread" data-cat="${escapeHtml(catId)}">+ New Thread</button>`;
+
+    renderForumShell(
+      forumBreadcrumb([
+        { label: "Forums", action: "index" },
+        { label: cat.label }
+      ]),
+      newBtn +
+      `<table class="v07-forum-table"><tbody>${rows}</tbody></table>`
+    );
+  }
+
+  async function renderForumThread(threadId, catId) {
+    forumView = { type: "thread", threadId, catId };
+    const cat = FORUM_CATEGORIES.find((c) => c.id === catId) || { id: catId, label: catId };
+    renderForumLoading();
+
+    const data = await forumFetch(`/threads?id=${threadId}`);
+    if (!data) {
+      renderForumShell(
+        forumBreadcrumb([{ label: "Forums", action: "index" }, { label: cat.label, action: `category:${catId}` }, { label: "Thread" }]),
+        `<div class="v07-forum-empty">Thread not found.</div>`
+      );
+      return;
+    }
+
+    const { thread, posts } = data;
+    const postHtml = (posts || []).map((p, i) =>
+      `<div class="v07-forum-post ${i % 2 === 0 ? "v07-forum-post-even" : ""}">` +
+        `<div class="v07-forum-post-author">${escapeHtml(p.author)}</div>` +
+        `<div class="v07-forum-post-body">${escapeHtml(p.body).replace(/\n/g, "<br>")}</div>` +
+        `<div class="v07-forum-post-time">${forumTimeAgo(p.createdAt)}</div>` +
+      `</div>`
+    ).join("");
+
+    const replyForm =
+      `<div class="v07-forum-reply-wrap">` +
+        `<h3 class="v07-forum-reply-head">Post a Reply</h3>` +
+        `<textarea class="v07-forum-reply-input" id="v07-reply-box" placeholder="Write your reply..." maxlength="2000" rows="4"></textarea>` +
+        `<button class="v07-forum-reply-btn" data-action="post-reply" data-tid="${escapeHtml(threadId)}">Post Reply</button>` +
+      `</div>`;
+
+    renderForumShell(
+      forumBreadcrumb([
+        { label: "Forums", action: "index" },
+        { label: cat.label, action: `category:${catId}` },
+        { label: thread.title }
+      ]),
+      `<h2 class="v07-forum-thread-heading">${escapeHtml(thread.title)}</h2>` +
+      postHtml +
+      replyForm
+    );
+  }
+
+  function renderNewThreadForm(catId) {
+    const cat = FORUM_CATEGORIES.find((c) => c.id === catId) || { id: catId, label: catId };
+    renderForumShell(
+      forumBreadcrumb([
+        { label: "Forums", action: "index" },
+        { label: cat.label, action: `category:${catId}` },
+        { label: "New Thread" }
+      ]),
+      `<div class="v07-forum-new-wrap">` +
+        `<h2 class="v07-forum-new-head">New Thread in ${escapeHtml(cat.label)}</h2>` +
+        `<label class="v07-forum-new-label">Title` +
+          `<input class="v07-forum-new-title" id="v07-thread-title" type="text" maxlength="80" placeholder="Thread title..." />` +
+        `</label>` +
+        `<label class="v07-forum-new-label">Message` +
+          `<textarea class="v07-forum-new-body" id="v07-thread-body" maxlength="2000" rows="6" placeholder="Write your post..."></textarea>` +
+        `</label>` +
+        `<button class="v07-forum-reply-btn" data-action="submit-thread" data-cat="${escapeHtml(catId)}">Post Thread</button>` +
+        `<button class="v07-forum-cancel-btn" data-action="category" data-cat="${escapeHtml(catId)}">Cancel</button>` +
+      `</div>`
+    );
+  }
+
+  async function handleForumAction(action, dataset) {
+    if (action === "close") { closeForumOverlay(); return; }
+    if (action === "index") { await renderForumIndex(); return; }
+
+    if (action === "category") {
+      await renderForumCategory(dataset.cat); return;
+    }
+
+    if (action.startsWith("category:")) {
+      await renderForumCategory(action.split(":")[1]); return;
+    }
+
+    if (action === "thread") {
+      await renderForumThread(dataset.tid, dataset.cat); return;
+    }
+
+    if (action === "new-thread") {
+      renderNewThreadForm(dataset.cat); return;
+    }
+
+    if (action === "submit-thread") {
+      const title = document.getElementById("v07-thread-title")?.value?.trim();
+      const body = document.getElementById("v07-thread-body")?.value?.trim();
+      if (!title || !body) return;
+
+      const btn = document.querySelector("[data-action='submit-thread']");
+      if (btn) btn.disabled = true;
+
+      const res = await forumFetch("/threads", {
+        method: "POST",
+        body: JSON.stringify({ username: forumUsername(), title, body, categoryId: dataset.cat })
+      });
+
+      if (res?.thread) {
+        await renderForumThread(res.thread.id, dataset.cat);
+      } else {
+        if (btn) btn.disabled = false;
+      }
+      return;
+    }
+
+    if (action === "post-reply") {
+      const body = document.getElementById("v07-reply-box")?.value?.trim();
+      if (!body) return;
+
+      const btn = document.querySelector("[data-action='post-reply']");
+      if (btn) btn.disabled = true;
+
+      const res = await forumFetch("/reply", {
+        method: "POST",
+        body: JSON.stringify({ threadId: dataset.tid, username: forumUsername(), body })
+      });
+
+      if (res?.post && forumView?.threadId) {
+        await renderForumThread(forumView.threadId, forumView.catId);
+      } else {
+        if (btn) btn.disabled = false;
+      }
+      return;
+    }
+  }
+
+  function openForum() {
+    if (forumOpen) { closeForumOverlay(); return; }
+    forumOpen = true;
+    document.querySelector(".v07-nav-link[data-v07-forum]")?.classList.add("v07-nav-active");
+    renderForumIndex();
+  }
+
+  function bindForumNavClick() {
+    document.addEventListener("click", (e) => {
+      if (!document.documentElement.classList.contains("v07-retro")) return;
+      const link = e.target.closest(".v07-nav-link[data-v07-forum]");
+      if (!link) return;
+      e.preventDefault();
+      openForum();
+    }, true);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && forumOpen) closeForumOverlay();
+    });
+  }
+
   restoreNavCache();
 
   hookSpaNavigation();
@@ -2713,4 +2953,5 @@
   });
 
   initFriendsCarousel();
+  bindForumNavClick();
 })();

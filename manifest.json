@@ -27,7 +27,8 @@
   ],
 
   "host_permissions": [
-    "https://playvortex.io/*"
+    "https://playvortex.io/*",
+    "https://vortex07.vercel.app/*"
   ],
 
   "content_scripts": [

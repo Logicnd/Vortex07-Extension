@@ -11,3 +11,7 @@
 !assets/**
 !icons/
 !icons/**
+!server/
+!server/**
+server/node_modules/
+server/.env

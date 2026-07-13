@@ -1,0 +1,7 @@
+{
+  "name": "vortex07-api",
+  "version": "1.0.0",
+  "description": "Vortex07 extension API — forums, ratings, shouts",
+  "private": true,
+  "engines": { "node": ">=18" }
+}
