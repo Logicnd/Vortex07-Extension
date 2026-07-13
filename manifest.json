@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Vortex07",
+  "version": "0.1.0",
+  "description": "The classic 2007-era Vortex experience.",
+  "author": "Vortex07",
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Vortex07"
+  },
+
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "https://playvortex.io/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["https://playvortex.io/*"],
+      "js": ["content/retro.js"],
+      "css": ["styles/retro.css"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/vortex-logo.png", "assets/topbarbg.jpg", "assets/OriginalPlayButton.png", "assets/SignUpAndPlay.png"],
+      "matches": ["https://playvortex.io/*"]
+    }
+  ]
+}

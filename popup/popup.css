@@ -1,0 +1,246 @@
+/* popup — 360px wide, tahoma stack */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 360px;
+  border: none;
+  font: 13px/1.35 Tahoma, Verdana, "MS Sans Serif", sans-serif;
+  color: #2d1b4e;
+  background: #f3eeff;
+}
+
+body.dark {
+  background: #0c0c0c;
+  color: #d0d0d0;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, #f8f2ff, #d4b8ff);
+  border-bottom: 2px solid #c9b8e8;
+}
+
+body.dark .bar {
+  background: linear-gradient(180deg, #5c4a82, #3a2858);
+  border-bottom-color: #5a4880;
+}
+
+.tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7b4fbf;
+  background: #fff;
+  border: 1px solid #999;
+  border-color: #ccc #666 #666 #ccc;
+  padding: 2px 6px;
+}
+
+body.dark .tag {
+  background: #e8e8e8;
+  color: #2d1b4e;
+}
+
+.pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border: 1px solid #999;
+  border-color: #ccc #666 #666 #ccc;
+  background: linear-gradient(180deg, #f5f5f5, #aaa);
+  color: #555;
+}
+
+.pill.on {
+  background: linear-gradient(180deg, #e8ffe8, #6bc06b);
+  color: #1a5c1a;
+}
+
+main {
+  padding: 14px 16px 10px;
+}
+
+h1 {
+  margin: 0 0 2px;
+  font-size: 18px;
+}
+
+.hint {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: #7a6a9a;
+}
+
+body.dark .hint {
+  color: #888;
+}
+
+body.dark h1 {
+  color: #e8e8e8;
+}
+
+.opts {
+  margin-bottom: 12px;
+  border: 1px solid #999;
+  border-color: #666 #ddd #ddd #666;
+  background: #f3eeff;
+}
+
+body.dark .opts {
+  background: #141414;
+  border-color: #444 #222 #222 #444;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  background: linear-gradient(180deg, #fff, #f0e8ff);
+  border-bottom: 1px solid #e0d0f8;
+  cursor: pointer;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+body.dark .row {
+  background: linear-gradient(180deg, #2a2a2a, #1e1e1e);
+  border-bottom-color: #333;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.meta b {
+  font-size: 13px;
+}
+
+.meta small {
+  font-size: 11px;
+  color: #7a6a9a;
+}
+
+body.dark .meta small {
+  color: #888;
+}
+
+body.skin-off .row:not(:first-child) {
+  opacity: 0.45;
+}
+
+/* switch */
+.sw {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 22px;
+  background: linear-gradient(180deg, #ddd, #999);
+  border: 1px solid #999;
+  border-color: #666 #ddd #ddd #666;
+}
+
+.sw input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sw i {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(180deg, #fff, #c8c8c8);
+  border: 1px solid #999;
+  border-color: #ccc #666 #666 #ccc;
+  transition: transform 0.1s steps(2, end);
+}
+
+.sw input:checked + i {
+  transform: translateX(20px);
+}
+
+.sw:has(input:checked) {
+  background: linear-gradient(180deg, #e8d5ff, #7b4fbf);
+  border-color: #5a3a8f #c49aef #c49aef #5a3a8f;
+}
+
+.sw input:disabled + i {
+  opacity: 0.5;
+}
+
+.sw:has(input:disabled) {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.discord {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid #999;
+  border-color: #a0b0ff #3a45a8 #3a45a8 #a0b0ff;
+  background: linear-gradient(180deg, #8b9dff, #4752c4);
+}
+
+.discord:hover {
+  background: linear-gradient(180deg, #a0b0ff, #5865f2);
+}
+
+.site {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+}
+
+.site a {
+  color: #6a0dad;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+body.dark .site a {
+  color: #8ab4ff;
+}
+
+.site a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  padding: 8px 16px 12px;
+  border-top: 2px solid #c9b8e8;
+  background: linear-gradient(180deg, #ede4fa, #d4b8ff);
+  font-size: 10px;
+  color: #7a6a9a;
+  text-align: center;
+}
+
+body.dark footer {
+  border-top-color: #5a4880;
+  background: linear-gradient(180deg, #5c4a82, #3a2858);
+  color: #aaa;
+}

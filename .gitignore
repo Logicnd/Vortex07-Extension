@@ -1,0 +1,13 @@
+*
+!.gitignore
+!manifest.json
+!popup/
+!popup/**
+!content/
+!content/**
+!styles/
+!styles/**
+!assets/
+!assets/**
+!icons/
+!icons/**
