@@ -2680,7 +2680,7 @@
 
       page.innerHTML =
         `<div class="v07-cfg-header">` +
-          `<span class="v07-cfg-title">Vortex07</span>` +
+          `<span class="v07-cfg-title">Vortex07 <span class="v07-cfg-hash">#Vortex07</span></span>` +
           `<span class="v07-cfg-ver">v0.1.0</span>` +
         `</div>` +
         `<div class="v07-cfg-body">` +
@@ -2689,9 +2689,10 @@
             `<div class="v07-cfg-rows">${rows}</div>` +
           `</div>` +
           `<div class="v07-cfg-panel v07-cfg-about">` +
-            `<div class="v07-cfg-panel-head">About</div>` +
-            `<p>Classic 2007-era skin for <a href="https://playvortex.io" class="v07-cfg-link">playvortex.io</a>.</p>` +
-            `<p>Built by the Vortex07 team. <a href="https://discord.gg/bVq4fTeDVS" class="v07-cfg-link" target="_blank">Join the Discord</a>.</p>` +
+            `<div class="v07-cfg-panel-head">Community</div>` +
+            `<div class="v07-cfg-discord-wrap">` +
+              `<a href="https://discord.gg/tGbVYTdqTG" class="v07-cfg-discord-btn" target="_blank">Join the Discord Server</a>` +
+            `</div>` +
           `</div>` +
         `</div>`;
 

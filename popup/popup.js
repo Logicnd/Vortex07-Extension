@@ -1,6 +1,6 @@
 (function () {
   const HOME = "https://playvortex.io/home";
-  const DISCORD = "https://discord.gg/tGbVYTdqTG";
+  const DISCORD = "https://discord.gg/tGbVYTdqTG";  // Vortex07 Discord server
 
   const defaults = {
     enabled: true,
@@ -15,8 +15,12 @@
   const pill = document.getElementById("pill");
   let s = { ...defaults };
 
+  function allCheckboxes() {
+    return document.querySelectorAll("input[type=checkbox][data-key]");
+  }
+
   function paint() {
-    opts.querySelectorAll("input[type=checkbox]").forEach((box) => {
+    allCheckboxes().forEach((box) => {
       const key = box.dataset.key;
       box.checked = !!s[key];
       if (key !== "enabled") box.disabled = !s.enabled;
@@ -29,7 +33,7 @@
     pill.classList.toggle("on", s.enabled);
   }
 
-  opts.addEventListener("change", (e) => {
+  document.body.addEventListener("change", (e) => {
     const box = e.target;
     if (box.type !== "checkbox" || !box.dataset.key) return;
     s[box.dataset.key] = box.checked;
