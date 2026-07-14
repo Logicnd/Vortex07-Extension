@@ -51,7 +51,7 @@
     { href: "/catalog", text: "Catalog", actionSel: "a[href=\"/catalog\"]" },
     { href: "profile", text: "MyVortex", actionSel: "#my-profile-btn", rename: true },
     { href: "/settings", text: "Settings", actionSel: "a[href=\"/settings\"]" },
-    { href: "/__v07_settings__", text: "Vortex07", v07Settings: true },
+    { href: "/vortex07", text: "Vortex07", v07Settings: true },
     { href: "/terms", text: "Terms" },
     { href: "/privacy", text: "Privacy" }
   ];
@@ -167,7 +167,6 @@
     if (spec.href === "profile") {
       return resolveProfileHref() || window.location.origin + "/home";
     }
-    if (spec.v07Forum || spec.v07Settings) return "";
     if (spec.external) {
       return spec.href;
     }
@@ -204,7 +203,6 @@
   }
 
   function isNavPathActive(spec, currentPath, linkEl) {
-    if (spec.v07Forum || spec.v07Settings) return false;
     if (spec.href === "profile") {
       if (linkEl?.href) {
         try {
@@ -272,7 +270,6 @@
       }
 
       el.href = navHref(spec);
-      if (spec.v07Forum) el.dataset.v07Forum = "1";
       if (spec.v07Settings) el.dataset.v07Settings = "1";
       if (spec.href === "profile") {
         applyProfileHref(el);
@@ -377,6 +374,7 @@
     if (path === "/catalog") return "catalog";
     if (PROFILE_PATH_RE.test(path)) return "profile";
     if (path === "/settings") return "settings";
+    if (path === "/vortex07") return "v07-settings";
     if (path === "/download") return "download";
     if (path === "/search") return "search";
     if (path.startsWith("/terms")) return "terms";
@@ -649,6 +647,7 @@
     patchCatalog();
     patchProfile();
     patchGame();
+    patchV07Settings();
   }
 
   let catalogWatch = null;
@@ -2337,10 +2336,7 @@
       if (!el) return;
       el.classList.remove("v07-nav-active");
       el.removeAttribute("aria-current");
-      if (spec.v07Settings && v07SettingsOpen) {
-        el.classList.add("v07-nav-active");
-        el.setAttribute("aria-current", "page");
-      } else if (isNavPathActive(spec, currentPath, el)) {
+      if (isNavPathActive(spec, currentPath, el)) {
         el.classList.add("v07-nav-active");
         el.setAttribute("aria-current", "page");
       }
@@ -2626,8 +2622,6 @@
     }
   }
 
-  let v07SettingsOpen = false;
-
   const V07_SETTING_DEFS = [
     { key: "enabled",    label: "Retro skin",    desc: "Master on/off for the entire skin" },
     { key: "darkMode",   label: "Stage Light",   desc: "Dark surround, lit content panels" },
@@ -2637,36 +2631,43 @@
     { key: "capGames",   label: "8-game cap",    desc: "Trim the home games grid to 8" }
   ];
 
-  function getOrMakeSettingsPage() {
-    let page = document.getElementById("v07-settings-page");
-    if (!page) {
-      page = document.createElement("div");
-      page.id = "v07-settings-page";
-      page.className = "v07-settings-page";
-      page.dataset.v07Injected = "1";
-    }
-    const sitePage = document.querySelector(".page");
-    if (sitePage) {
-      sitePage.style.display = "none";
-      sitePage.after(page);
-    } else {
-      document.body.appendChild(page);
-    }
-    return page;
+  function isV07SettingsPage() {
+    return detectRoute() === "v07-settings";
   }
 
-  function closeSettingsPage() {
-    v07SettingsOpen = false;
+  function unpatchV07Settings() {
     document.getElementById("v07-settings-page")?.remove();
     const sitePage = document.querySelector(".page");
     if (sitePage) sitePage.style.display = "";
-    document.querySelector(".v07-nav-link[data-v07-settings]")?.classList.remove("v07-nav-active");
+  }
+
+  function patchV07Settings() {
+    if (!isV07SettingsPage()) {
+      unpatchV07Settings();
+      return;
+    }
+    renderSettingsPage();
   }
 
   function renderSettingsPage() {
     chrome.storage.local.get(DEFAULTS, (data) => {
+      if (!isV07SettingsPage()) return;
+
       const s = readSettings(data);
-      const page = getOrMakeSettingsPage();
+      let page = document.getElementById("v07-settings-page");
+      if (!page) {
+        page = document.createElement("div");
+        page.id = "v07-settings-page";
+        page.className = "v07-settings-page";
+        page.dataset.v07Injected = "1";
+      }
+      const sitePage = document.querySelector(".page");
+      if (sitePage) {
+        sitePage.style.display = "none";
+        sitePage.after(page);
+      } else {
+        document.body.appendChild(page);
+      }
 
       const rows = V07_SETTING_DEFS.map((def) =>
         `<label class="v07-cfg-row">` +
@@ -2712,31 +2713,18 @@
     });
   }
 
-  function openSettingsPage() {
-    v07SettingsOpen = true;
-    document.querySelector(".v07-nav-link[data-v07-settings]")?.classList.add("v07-nav-active");
-    renderSettingsPage();
-  }
-
-  function bindForumNavClick() {
+  function bindV07SettingsNavClick() {
     document.addEventListener("click", (e) => {
       if (!document.documentElement.classList.contains("v07-retro")) return;
 
-      const settingsLink = e.target.closest(".v07-nav-link[data-v07-settings]");
-      if (settingsLink) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        if (v07SettingsOpen) {
-          closeSettingsPage();
-        } else {
-          openSettingsPage();
-        }
-        return;
-      }
+      const link = e.target.closest(".v07-nav-link[data-v07-settings]");
+      if (!link) return;
 
-      if (v07SettingsOpen && e.target.closest(".v07-nav-link:not([data-v07-settings])")) {
-        closeSettingsPage();
-      }
+      e.preventDefault();
+      e.stopPropagation();
+      const target = "/vortex07";
+      if (window.location.pathname.replace(/\/$/, "") === target) return;
+      history.pushState({}, "", target);
     }, true);
   }
 
@@ -2774,5 +2762,5 @@
   });
 
   initFriendsCarousel();
-  bindForumNavClick();
+  bindV07SettingsNavClick();
 })();
