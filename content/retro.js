@@ -167,7 +167,7 @@
     if (spec.href === "profile") {
       return resolveProfileHref() || window.location.origin + "/home";
     }
-    if (spec.v07Forum) return "#";
+    if (spec.v07Forum) return "javascript:void(0)";
     if (spec.external) {
       return spec.href;
     }
