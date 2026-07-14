@@ -167,7 +167,7 @@
     if (spec.href === "profile") {
       return resolveProfileHref() || window.location.origin + "/home";
     }
-    if (spec.v07Forum || spec.v07Settings) return "javascript:void(0)";
+    if (spec.v07Forum || spec.v07Settings) return "";
     if (spec.external) {
       return spec.href;
     }
@@ -2726,11 +2726,15 @@
       if (settingsLink) {
         e.preventDefault();
         e.stopImmediatePropagation();
-        if (v07SettingsOpen) { closeSettingsPage(); } else { openSettingsPage(); }
+        if (v07SettingsOpen) {
+          closeSettingsPage();
+        } else {
+          openSettingsPage();
+        }
         return;
       }
 
-      if (v07SettingsOpen && e.target.closest(".v07-nav-link")) {
+      if (v07SettingsOpen && e.target.closest(".v07-nav-link:not([data-v07-settings])")) {
         closeSettingsPage();
       }
     }, true);
