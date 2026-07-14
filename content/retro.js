@@ -2661,21 +2661,30 @@
     }
   }
 
-  function getOrMakeForumMount() {
-    let mount = document.getElementById("v07-forum-mount");
-    if (!mount) {
-      mount = document.createElement("div");
-      mount.id = "v07-forum-mount";
-      mount.dataset.v07Injected = "1";
-      document.body.appendChild(mount);
+  function getForumPage() {
+    let page = document.getElementById("v07-forum-page");
+    if (!page) {
+      page = document.createElement("div");
+      page.id = "v07-forum-page";
+      page.className = "v07-forum-page";
+      page.dataset.v07Injected = "1";
     }
-    return mount;
+    const sitePage = document.querySelector(".page");
+    if (sitePage) {
+      sitePage.style.display = "none";
+      sitePage.after(page);
+    } else {
+      document.body.appendChild(page);
+    }
+    return page;
   }
 
-  function closeForumOverlay() {
+  function closeForumPage() {
     forumOpen = false;
     forumView = null;
-    document.getElementById("v07-forum-mount")?.remove();
+    document.getElementById("v07-forum-page")?.remove();
+    const sitePage = document.querySelector(".page");
+    if (sitePage) sitePage.style.display = "";
     document.querySelector(".v07-nav-link[data-v07-forum]")?.classList.remove("v07-nav-active");
   }
 
@@ -2688,20 +2697,17 @@
   }
 
   function renderForumShell(breadcrumbs, innerHtml) {
-    const mount = getOrMakeForumMount();
-    mount.innerHTML =
-      `<div class="v07-forum-overlay">` +
-        `<div class="v07-forum-box">` +
-          `<div class="v07-forum-topbar">` +
-            `<span class="v07-forum-title">Vortex07 Forums</span>` +
-            `<button class="v07-forum-close" data-action="close" title="Close">&times;</button>` +
-          `</div>` +
+    const page = getForumPage();
+    page.innerHTML =
+      `<div class="v07-forum-header">` +
+        `<div class="v07-forum-header-inner">` +
+          `<span class="v07-forum-title">Vortex07 Forums</span>` +
           `<div class="v07-forum-bc">${breadcrumbs}</div>` +
-          `<div class="v07-forum-body">${innerHtml}</div>` +
         `</div>` +
-      `</div>`;
+      `</div>` +
+      `<div class="v07-forum-content">${innerHtml}</div>`;
 
-    mount.querySelectorAll("[data-action]").forEach((el) => {
+    page.querySelectorAll("[data-action]").forEach((el) => {
       el.addEventListener("click", (e) => {
         e.preventDefault();
         handleForumAction(el.dataset.action, el.dataset);
@@ -2712,7 +2718,7 @@
   function renderForumLoading() {
     renderForumShell(
       forumBreadcrumb([{ label: "Forums" }]),
-      `<div class="v07-forum-loading">Loading...</div>`
+      `<div class="v07-forum-loading"><span class="v07-forum-loading-dot"></span> Loading...</div>`
     );
   }
 
@@ -2837,7 +2843,7 @@
   }
 
   async function handleForumAction(action, dataset) {
-    if (action === "close") { closeForumOverlay(); return; }
+    if (action === "close") { closeForumPage(); return; }
     if (action === "index") { await renderForumIndex(); return; }
 
     if (action === "category") {
@@ -2899,7 +2905,6 @@
   }
 
   function openForum() {
-    if (forumOpen) { closeForumOverlay(); return; }
     forumOpen = true;
     document.querySelector(".v07-nav-link[data-v07-forum]")?.classList.add("v07-nav-active");
     renderForumIndex();
@@ -2911,11 +2916,14 @@
       const link = e.target.closest(".v07-nav-link[data-v07-forum]");
       if (!link) return;
       e.preventDefault();
+      if (forumOpen) { closeForumPage(); return; }
       openForum();
     }, true);
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && forumOpen) closeForumOverlay();
+    document.addEventListener("click", (e) => {
+      if (!forumOpen) return;
+      const navLink = e.target.closest(".v07-nav-link:not([data-v07-forum])");
+      if (navLink) closeForumPage();
     });
   }
 
