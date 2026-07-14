@@ -2337,7 +2337,10 @@
       if (!el) return;
       el.classList.remove("v07-nav-active");
       el.removeAttribute("aria-current");
-      if (isNavPathActive(spec, currentPath, el)) {
+      if (spec.v07Settings && v07SettingsOpen) {
+        el.classList.add("v07-nav-active");
+        el.setAttribute("aria-current", "page");
+      } else if (isNavPathActive(spec, currentPath, el)) {
         el.classList.add("v07-nav-active");
         el.setAttribute("aria-current", "page");
       }
@@ -2680,7 +2683,7 @@
 
       page.innerHTML =
         `<div class="v07-cfg-header">` +
-          `<span class="v07-cfg-title">Vortex07 <span class="v07-cfg-hash">#Vortex07</span></span>` +
+          `<span class="v07-cfg-title">Vortex07</span>` +
           `<span class="v07-cfg-ver">v0.1.0</span>` +
         `</div>` +
         `<div class="v07-cfg-body">` +

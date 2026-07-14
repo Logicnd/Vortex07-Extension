@@ -4095,13 +4095,6 @@ html.v07-retro.v07-dark body[data-v07-route="privacy"] .page {
   color: rgba(255,255,255,0.65) !important;
 }
 
-.v07-cfg-hash {
-  font-size: var(--v07-font-sm) !important;
-  font-weight: 400 !important;
-  color: rgba(255,255,255,0.55) !important;
-  letter-spacing: 0.02em !important;
-  margin-left: 0.25rem !important;
-}
 
 .v07-cfg-body {
   display: flex !important;
