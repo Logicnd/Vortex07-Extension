@@ -4131,14 +4131,15 @@ html.v07-retro.v07-dark body[data-v07-route="privacy"] .page {
   font-size: var(--v07-font-base) !important;
 }
 
-.v07-forum-cat-row,
-.v07-forum-thread-row {
+.v07-forum-page .v07-forum-cat-row,
+.v07-forum-page .v07-forum-thread-row {
   cursor: pointer !important;
   border-bottom: 1px solid #e0e0e0 !important;
+  transition: background 0.08s !important;
 }
-.v07-forum-cat-row:hover,
-.v07-forum-thread-row:hover {
-  background: #eef3ff !important;
+.v07-forum-page .v07-forum-cat-row:hover,
+.v07-forum-page .v07-forum-thread-row:hover {
+  background: #dde6ff !important;
 }
 
 .v07-forum-cat-icon,

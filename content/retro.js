@@ -2913,18 +2913,19 @@
   function bindForumNavClick() {
     document.addEventListener("click", (e) => {
       if (!document.documentElement.classList.contains("v07-retro")) return;
-      const link = e.target.closest(".v07-nav-link[data-v07-forum]");
-      if (!link) return;
-      e.preventDefault();
-      if (forumOpen) { closeForumPage(); return; }
-      openForum();
-    }, true);
 
-    document.addEventListener("click", (e) => {
-      if (!forumOpen) return;
-      const navLink = e.target.closest(".v07-nav-link:not([data-v07-forum])");
-      if (navLink) closeForumPage();
-    });
+      const forumLink = e.target.closest(".v07-nav-link[data-v07-forum]");
+      if (forumLink) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (forumOpen) { closeForumPage(); } else { openForum(); }
+        return;
+      }
+
+      if (forumOpen && e.target.closest(".v07-nav-link")) {
+        closeForumPage();
+      }
+    }, true);
   }
 
   restoreNavCache();
