@@ -1,49 +1,109 @@
 {
   "manifest_version": 3,
   "name": "Vortex07",
-  "version": "0.1.0",
-  "description": "The classic 2007-era Vortex experience.",
-  "author": "Vortex07",
-
+  "version": "2.6.0",
+  "description": "Restyles playvortex.io with 2006–2007 Roblox / Windows XP chrome — player search, global rep, guestbook, badges, forum, and dark mode.",
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
   },
-
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
+      "16": "assets/icons/icon16.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
     },
-    "default_title": "Vortex07"
+    "default_title": "VORTEX07"
   },
-
-  "permissions": [
-    "storage",
-    "tabs"
-  ],
-
-  "host_permissions": [
-    "https://playvortex.io/*",
-    "https://vortex07.vercel.app/*"
-  ],
-
   "content_scripts": [
     {
-      "matches": ["https://playvortex.io/*"],
-      "js": ["content/retro.js"],
-      "css": ["styles/retro.css"],
+      "matches": [
+        "*://*.playvortex.io/*",
+        "http://127.0.0.1:5173/*",
+        "http://localhost:5173/*"
+      ],
+      "js": [
+        "content/anti-fouc.js",
+        "content/lib/browser-api.js",
+        "content/lib/settings-schema.js",
+        "content/features/catalog-preview.js",
+        "content/lib/dom.js",
+        "content/lib/format.js",
+        "content/lib/avatar.js",
+        "content/features/settings-ui.js",
+        "content/content.js",
+        "content/features/hover.js",
+        "content/features/reputation.js",
+        "content/features/game-rating.js",
+        "content/features/social.js",
+        "content/features/guestbook.js",
+        "content/features/economy.js",
+        "content/features/forum-api.js",
+        "content/features/api-queue.js",
+        "content/features/forum-ui.js",
+        "content/layout.js",
+        "content/search.js",
+        "content/features/friends-carousel.js"
+      ],
+      "css": [
+        "styles/anti-fouc.css",
+        "styles/features/friends-carousel.css"
+      ],
       "run_at": "document_start"
     }
   ],
-
+  "permissions": ["storage", "tabs", "cookies", "alarms"],
+  "minimum_chrome_version": "88",
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "host_permissions": [
+    "*://*.playvortex.io/*",
+    "http://127.0.0.1:5173/*",
+    "http://localhost:5173/*",
+    "https://vortex07.vercel.app/*",
+    "http://127.0.0.1:3000/*",
+    "http://localhost:3000/*",
+    "http://127.0.0.1:3210/*",
+    "http://localhost:3210/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "vortex07@playvortex.extension",
+      "strict_min_version": "109.0"
+    },
+    "gecko_android": {
+      "strict_min_version": "109.0"
+    }
+  },
   "web_accessible_resources": [
     {
-      "resources": ["assets/vortex-logo.png", "assets/topbarbg.jpg", "assets/OriginalPlayButton.png", "assets/SignUpAndPlay.png"],
-      "matches": ["https://playvortex.io/*"]
+      "matches": [
+        "*://*.playvortex.io/*",
+        "http://127.0.0.1:5173/*",
+        "http://localhost:5173/*"
+      ],
+      "resources": [
+        "assets/icons/*",
+        "assets/badges/*",
+        "assets/logo.png",
+        "assets/VertexCoin.png",
+        "assets/VertexCoin-64.png",
+        "assets/topbarbg.jpg",
+        "assets/OriginalPlayButton.png",
+        "assets/SignUpAndPlay.png",
+        "styles/styles.css",
+        "styles/retro-2007.css",
+        "styles/modules/*",
+        "styles/retro/*",
+        "styles/features/*",
+        "content/features/scary-myth.js"
+      ]
     }
   ]
 }

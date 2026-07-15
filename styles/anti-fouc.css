@@ -1,0 +1,5 @@
+/* Anti-FOUC: hide the native page until Vortex07 finishes applying the theme. */
+html.vortex07-loading body {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}

@@ -1,0 +1,283 @@
+/* --------------------------------------------------------- */
+/* 19 PHASE 3 — discovery & flex (v2.1.0)                    */
+/* ========================================================= */
+
+/* Compare — classic VS screen */
+.vortex07-compare-modal {
+  border: 2px solid var(--vx-border);
+  background: linear-gradient(180deg, var(--vx-panel-bg) 0%, var(--vx-shell-bg) 100%);
+}
+
+.vortex07-compare-col--lead {
+  border-color: #c9a227;
+  background: linear-gradient(180deg, var(--vx-tint-gold) 0%, var(--vx-panel-bg) 100%);
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 39, 0.35);
+}
+
+.vortex07-compare-vs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font: bold 18px/1 var(--vx-display-font);
+  color: var(--vx-link);
+  letter-spacing: 0.08em;
+}
+
+.vortex07-compare-diff {
+  font: bold 10px/1.2 var(--vx-ui-font);
+  color: #8a6d00;
+  padding: 2px 6px;
+  border: 1px solid #d4b84a;
+  background: var(--vx-tint-gold);
+}
+
+.vortex07-compare-diff--tie {
+  color: var(--vx-stat-label);
+  border-color: var(--vx-border-inner);
+  background: var(--vx-section-head);
+}
+
+/* Roulette spin */
+html.vortex07-active .vortex07-roulette-btn.vortex07-roulette-spinning {
+  animation: vortex07-roulette-spin 0.45s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes vortex07-roulette-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Termed archive search */
+.vortex07-archive-count {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 5px;
+  font: bold 10px/1.4 var(--vx-ui-font);
+  border: 1px solid var(--vx-border-inner);
+  background: var(--vx-section-head);
+  color: var(--vx-link);
+}
+
+.vortex07-archive-section-hint {
+  padding: 2px 8px 4px;
+  font: 10px/1.35 var(--vx-ui-font);
+  color: var(--vx-stat-label);
+  border-bottom: 1px dotted var(--vx-border-inner);
+}
+
+html.vortex07-active .vortex07-user-result.vortex07-user-termed {
+  border-left: 3px solid #8b4513;
+  background: linear-gradient(90deg, var(--vx-tint-gold) 0%, var(--vx-panel-bg) 12%);
+}
+
+html.vortex07-active .vortex07-user-termed .vortex07-archive-meta {
+  color: #8b4513;
+  font-style: italic;
+}
+
+/* Game detail page */
+html.vortex07-active #Container.vortex07-route-game #Body {
+  padding: 10px 12px 12px;
+}
+
+html.vortex07-active #Container.vortex07-route-game .vortex07-game-shell,
+html.vortex07-active #Container.vortex07-route-game #Body > .page {
+  border: 1px solid var(--vx-border-inner);
+  background: var(--vx-shell-bg);
+  box-shadow: none !important;
+}
+
+html.vortex07-active #Container.vortex07-route-game .game-detail-header,
+html.vortex07-active #Container.vortex07-route-game .game-banner,
+html.vortex07-active #Container.vortex07-route-game .section-header {
+  background: var(--vx-section-head);
+  border-bottom: 1px solid var(--vx-border-inner);
+}
+
+html.vortex07-active #Container.vortex07-route-game .game-detail-title,
+html.vortex07-active #Container.vortex07-route-game .game-detail-creator {
+  font-family: var(--vx-display-font);
+}
+
+html.vortex07-active #Container.vortex07-route-game .game-stat {
+  border: 1px solid var(--vx-border-inner);
+  background: var(--vx-tint-lavender, #f4f0ff);
+  padding: 4px 8px;
+}
+
+html.vortex07-active #Container.vortex07-route-game .game-description-box {
+  border: 1px solid var(--vx-border-inner);
+  background: var(--vx-panel-bg);
+  padding: 8px 10px;
+}
+
+html.vortex07-active #Container.vortex07-route-game .btn-play,
+html.vortex07-active #Container.vortex07-route-game [class*="play-btn"],
+html.vortex07-active #Container.vortex07-route-game .btn-primary {
+  font: bold 11px var(--vx-ui-font);
+}
+
+/* Download page — layout handled in retro-2007.css */
+
+/* Home leaderboard */
+html.vortex07-active .vortex07-home-leaderboard-foot {
+  padding: 5px 8px 6px;
+  border-top: 1px solid var(--vx-border-inner);
+  background: var(--vx-section-head);
+  text-align: center;
+}
+
+html.vortex07-active .vortex07-home-leaderboard-foot-text {
+  font: 10px/1.3 var(--vx-ui-font);
+  color: var(--vx-stat-label);
+}
+
+/* --------------------------------------------------------- */
+/* 19 Friends pagination, social search                           */
+/* --------------------------------------------------------- */
+
+html.vortex07-active #Container .vortex07-friend-page-hidden {
+  display: none !important;
+}
+
+html.vortex07-active #Container .friends-row.vortex07-friends-row-paged,
+html.vortex07-active #Container .friends-grid.vortex07-friends-row-paged,
+html.vortex07-active #Container.vortex07-route-profile .friends-section .friends-grid.vortex07-friends-row-paged,
+html.vortex07-active #Container.vortex07-route-profile .friends-section .friends-row.vortex07-friends-row-paged,
+html.vortex07-active #Body > .page:has(.profile-header) .friends-grid.vortex07-friends-row-paged,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-grid.vortex07-friends-row-paged,
+html.vortex07-active #Body > .page:has(.profile-header) .friends-row.vortex07-friends-row-paged,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-row.vortex07-friends-row-paged {
+  display: flex !important;
+  overflow: hidden !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start;
+  justify-content: flex-start !important;
+  width: 100%;
+  gap: 10px !important;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+html.vortex07-active #Container .friends-row.vortex07-friends-row-paged .friend-card,
+html.vortex07-active #Container .friends-grid.vortex07-friends-row-paged .friend-card {
+  flex: 0 0 78px;
+  width: 78px;
+  min-width: 78px;
+  max-width: 78px;
+  margin: 0;
+  padding: 0 0 4px;
+}
+
+html.vortex07-active #Container .friends-row.vortex07-friends-row-paged .friend-avatar-wrap,
+html.vortex07-active #Container .friends-grid.vortex07-friends-row-paged .friend-avatar-wrap {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto;
+}
+
+html.vortex07-active #Container .friends-row.vortex07-friends-row-paged .friend-name,
+html.vortex07-active #Container .friends-grid.vortex07-friends-row-paged .friend-name,
+html.vortex07-active #Container .friends-row.vortex07-friends-row-paged .friend-name-text,
+html.vortex07-active #Container .friends-grid.vortex07-friends-row-paged .friend-name-text {
+  display: block;
+  width: 78px;
+  max-width: 78px;
+  margin-top: 4px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-row.vortex07-friends-row-paged .friend-card,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-row.vortex07-friends-row-paged .friend-card,
+html.vortex07-active #Body > .page:has(.profile-header) .friends-grid.vortex07-friends-row-paged .friend-card,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-grid.vortex07-friends-row-paged .friend-card,
+html.vortex07-active #Container.vortex07-route-profile .friends-section .friends-row.vortex07-friends-row-paged .friend-card,
+html.vortex07-active #Container.vortex07-route-profile .friends-section .friends-grid.vortex07-friends-row-paged .friend-card {
+  flex: 0 0 78px !important;
+  width: 78px !important;
+  min-width: 78px !important;
+  max-width: 78px !important;
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-row.vortex07-friends-row-paged .friend-avatar-wrap,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-row.vortex07-friends-row-paged .friend-avatar-wrap,
+html.vortex07-active #Container.vortex07-route-profile .friends-section .friends-row.vortex07-friends-row-paged .friend-avatar-wrap {
+  width: 58px !important;
+  height: 58px !important;
+}
+
+html.vortex07-active #Container .vortex07-friends-page-indicator {
+  display: block;
+  width: fit-content;
+  margin: 4px auto 0;
+  padding: 0;
+  text-align: center;
+  font: 10px/1.35 Tahoma, "MS Sans Serif", Arial, sans-serif;
+  color: var(--vx-link);
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+html.vortex07-active #Container .friends-section .vortex07-friends-page-indicator {
+  letter-spacing: 0.03em;
+}
+
+html.vortex07-active.vortex07-dark #Container .vortex07-friends-page-indicator {
+  color: var(--vx-link);
+}
+
+html.vortex07-active .vortex07-social-friend-search-wrap {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--vx-border-light);
+  background: var(--vx-panel-bg);
+}
+
+html.vortex07-active .vortex07-social-friend-search-label {
+  display: block;
+  margin-bottom: 4px;
+  font: bold 10px var(--vx-display-font);
+  color: var(--vx-stat-label);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+html.vortex07-active .vortex07-social-friend-search {
+  width: 100%;
+  max-width: 320px;
+  padding: 4px 6px;
+  border: 1px solid var(--vx-border);
+  background: var(--vx-shell-bg);
+  color: var(--vx-text);
+  font: var(--vx-size) var(--vx-ui-font);
+  box-sizing: border-box;
+}
+
+html.vortex07-active .vortex07-social-friend-hidden {
+  display: none !important;
+}
+
+html.vortex07-active .vortex07-social-vortex-badge {
+  display: inline-block;
+  margin: 2px 0 0;
+  padding: 1px 6px;
+  border: 1px solid var(--vx-feature-border);
+  background: #f0ecf8;
+  font: 9px/1.35 Tahoma, "MS Sans Serif", Arial, sans-serif;
+  color: #5c4a9e;
+  vertical-align: top;
+}
+
+html.vortex07-active.vortex07-dark .vortex07-social-vortex-badge {
+  background: var(--vx-panel-bg);
+  border-color: var(--vx-border);
+  color: var(--vx-link);
+}

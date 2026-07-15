@@ -1,79 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Vortex07</title>
-  <link rel="stylesheet" href="popup.css">
-</head>
-<body>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
 
-<header class="bar">
-  <span class="tag">Vortex07 0.1.0</span>
-  <span class="pill on" id="pill">ON</span>
-</header>
+  <body>
+    <div class="popup-shell" id="popupShell">
+      <div class="popup-titlebar">
+        <span class="popup-titlebar-glyph" aria-hidden="true">V07</span>
+        <span class="popup-titlebar-text">Vortex07</span>
+      </div>
 
-<main>
-  <h1>Settings</h1>
-  <p class="hint">2007 skin for playvortex.io</p>
+      <div class="popup-client popup-about">
+        <div class="popup-about-logo-wrap">
+          <img class="popup-about-logo" src="../assets/icons/icon48.png" alt="" width="48" height="48" />
+        </div>
+        <p class="popup-about-tagline">Modern retro playvortex.io</p>
+        <p class="popup-ver" id="popupVersion">v…</p>
 
-  <div class="quick-row">
-    <label class="quick-label">
-      <span>Dark Mode</span>
-      <span class="sw"><input type="checkbox" data-key="darkMode"><i></i></span>
-    </label>
-  </div>
+        <fieldset class="popup-group" data-group="quick">
+          <legend>Quick toggles</legend>
+          <label class="popup-row popup-row-master">
+            <input type="checkbox" id="toggleEnabled" data-setting="enabled" />
+            <span>Enable Vortex07</span>
+          </label>
+          <label class="popup-row">
+            <input type="checkbox" id="toggleDarkMode" data-setting="darkMode" />
+            <span>Dark mode</span>
+          </label>
+          <label class="popup-row">
+            <input type="checkbox" id="toggleUserSearch" data-setting="userSearch" />
+            <span>Smart player search</span>
+          </label>
+          <label class="popup-row">
+            <input type="checkbox" id="toggleFriendRows" data-setting="friendRowCarousels" />
+            <span>Friend row scroll arrows</span>
+          </label>
+          <label class="popup-row">
+            <input type="checkbox" id="toggleIconCache" data-setting="iconCache" />
+            <span>Cache extension icons</span>
+          </label>
+          <p class="popup-hint" id="saveStatus">Ready</p>
+        </fieldset>
 
-  <div class="opts" id="opts">
-    <label class="row">
-      <span class="meta">
-        <b>Retro skin</b>
-        <small>Master on/off</small>
-      </span>
-      <span class="sw"><input type="checkbox" data-key="enabled" checked><i></i></span>
-    </label>
-    <label class="row">
-      <span class="meta">
-        <b>Stage Light</b>
-        <small>Dark surround, lit panels</small>
-      </span>
-      <span class="sw"><input type="checkbox" data-key="darkMode"><i></i></span>
-    </label>
-    <label class="row">
-      <span class="meta">
-        <b>Welcome line</b>
-        <small>Home greeting with your name</small>
-      </span>
-      <span class="sw"><input type="checkbox" data-key="welcome" checked><i></i></span>
-    </label>
-    <label class="row">
-      <span class="meta">
-        <b>Online dots</b>
-        <small>Green dot on online friends</small>
-      </span>
-      <span class="sw"><input type="checkbox" data-key="onlineDots" checked><i></i></span>
-    </label>
-    <label class="row">
-      <span class="meta">
-        <b>Live stats</b>
-        <small>Player counts, requests badge</small>
-      </span>
-      <span class="sw"><input type="checkbox" data-key="liveStats" checked><i></i></span>
-    </label>
-    <label class="row">
-      <span class="meta">
-        <b>8-game cap</b>
-        <small>Trim home games grid</small>
-      </span>
-      <span class="sw"><input type="checkbox" data-key="capGames" checked><i></i></span>
-    </label>
-  </div>
+        <fieldset class="popup-group popup-features-group">
+          <legend>Includes</legend>
+          <ul class="popup-features" id="popupFeatures">
+            <li>2007 shell, search &amp; hover cards</li>
+            <li>Global rep, leaderboard &amp; game ratings</li>
+            <li>Retro badges, status lines &amp; guestbook</li>
+            <li>Community forum &amp; in-page settings</li>
+          </ul>
+        </fieldset>
 
-  <button type="button" class="discord" id="discord-btn">Discord Server</button>
-  <p class="site"><a href="#" id="site-link">playvortex.io</a></p>
-</main>
+        <button type="button" class="popup-open-settings rbx-popup-btn" id="openSettingsTab">
+          Open Vortex07 Settings
+        </button>
+        <p class="popup-hint popup-settings-hint">
+          All options live on playvortex under the <strong>Vortex07</strong> tab (<a href="https://playvortex.io/home#vortex07-settings">/home#vortex07-settings</a>).
+        </p>
 
-<footer>vortex07 — classic web edition</footer>
+        <a
+          class="popup-wiki-link"
+          href="https://playvortex.wiki/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Official Wiki
+        </a>
+        <a
+          class="popup-discord-link"
+          href="https://discord.gg/bVq4fTeDVS"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Vortality Discord
+        </a>
+      </div>
 
-<script src="popup.js"></script>
-</body>
+      <div class="popup-statusbar" id="popupStatusbar">
+        <span id="popupStatus">Fan extension — not affiliated with Vortex</span>
+        <span class="popup-statusbar-ver" id="popupStatusVer">v…</span>
+      </div>
+    </div>
+
+    <script src="../content/lib/browser-api.js"></script>
+    <script src="../content/lib/settings-schema.js"></script>
+    <script src="popup.js"></script>
+  </body>
 </html>

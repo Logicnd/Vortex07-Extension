@@ -1,6 +1,7 @@
 *
 !.gitignore
 !manifest.json
+!package.json
 !popup/
 !popup/**
 !content/
@@ -9,9 +10,16 @@
 !styles/**
 !assets/
 !assets/**
-!icons/
-!icons/**
+!scripts/
+!scripts/**
 !server/
 !server/**
+!background/
+!background/**
+!pages/
+!pages/**
 server/node_modules/
 server/.env
+
+.vercel
+.env*

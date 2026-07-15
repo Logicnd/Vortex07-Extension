@@ -1,0 +1,15 @@
+/* Vortex07 core theme ? split modules (load order matters) */
+@import url("modules/tokens.css");
+@import url("modules/base-shell.css");
+@import url("modules/search.css");
+@import url("modules/reputation-ui.css");
+@import url("modules/home.css");
+@import url("modules/profile.css");
+@import url("modules/social.css");
+@import url("modules/catalog.css");
+@import url("modules/game-detail.css");
+@import url("modules/download-settings.css");
+@import url("modules/misc-ui.css");
+@import url("modules/economy.css");
+@import url("modules/friends-pagination.css");
+@import url("modules/dark-mode.css");

@@ -1,7 +1,12 @@
 {
   "name": "vortex07-api",
-  "version": "1.0.0",
-  "description": "Vortex07 extension API — forums, ratings, shouts",
   "private": true,
-  "engines": { "node": ">=18" }
+  "type": "module",
+  "scripts": {
+    "deploy:prod": "node ../scripts/vercel/deploy.js",
+    "verify": "node ../scripts/vercel/verify.js"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.34.3"
+  }
 }

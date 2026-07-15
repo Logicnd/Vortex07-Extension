@@ -1,0 +1,315 @@
+/* 12 SOCIAL / USERS — tabs, rows, cards                       */
+/* --------------------------------------------------------- */
+
+html.vortex07-active #Container .tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border: 1px solid var(--vx-border-light);
+  margin: 0 0 8px;
+  background: var(--vx-header-bg);
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+html.vortex07-active #Container .tab-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  padding: 5px 8px;
+  border: var(--vx-outset);
+  border-color: transparent;
+  background: linear-gradient(180deg, var(--vx-btn-highlight) 0%, var(--vx-btn-face) 100%);
+  font: bold var(--vx-size) / 1.2 var(--vx-ui-font);
+  letter-spacing: 0.04em;
+  color: var(--vx-link);
+  cursor: pointer;
+  text-align: center;
+}
+
+html.vortex07-active #Container .tab-btn:last-child {
+  border-right: var(--vx-outset);
+  border-color: transparent;
+}
+
+html.vortex07-active #Container .tab-btn:hover {
+  background: var(--vx-nav-hover);
+}
+
+html.vortex07-active #Container .tab-btn.active {
+  background: var(--vx-nav-bg);
+  color: var(--vx-nav-text);
+  border: 1px solid #3d2f6e;
+  border-top-color: #8a78c8;
+  border-left-color: #7a68bc;
+  border-bottom-color: #2a1f4a;
+  border-right-color: #2a1f4a;
+}
+
+html.vortex07-active #Container .badge {
+  display: inline-block;
+  min-width: 14px;
+  padding: 0 3px;
+  font-size: 9px;
+  font-weight: bold;
+  line-height: 14px;
+  text-align: center;
+  border: 1px solid var(--vx-border);
+  background: var(--vx-nav-hover);
+  color: var(--vx-text);
+  vertical-align: middle;
+}
+
+html.vortex07-active #Container .user-list {
+  display: block;
+  margin: 0;
+  padding: 2px 0 4px;
+}
+
+html.vortex07-active #Container .user-list .user-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 6px 12px;
+  margin: 0 0 6px;
+  border: 1px solid var(--vx-border);
+  background: linear-gradient(180deg, var(--vx-panel-bg) 0%, var(--vx-shell-bg) 100%);
+  box-shadow: var(--vx-panel-inset);
+  position: relative;
+  overflow: hidden;
+}
+
+html.vortex07-active #Container .user-list .user-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: linear-gradient(180deg, var(--vx-nav-hover) 0%, var(--vx-nav-bg) 100%);
+  border-right: 1px solid #3d2f6e;
+}
+
+html.vortex07-active #Container .user-list .user-row:hover {
+  background: linear-gradient(180deg, var(--vx-panel-bg) 0%, var(--vx-tint-lavender) 100%);
+  border-color: var(--vx-nav-hover);
+}
+
+html.vortex07-active #Container .user-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  margin: 0 0 2px;
+  border: 1px solid var(--vx-border-light);
+  background: var(--vx-panel-bg);
+}
+
+html.vortex07-active #Container .user-row-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid var(--vx-border);
+  object-fit: cover;
+  background: var(--vx-shell-bg);
+}
+
+html.vortex07-active #Container .user-row-name {
+  flex: 1;
+  min-width: 0;
+  font: bold var(--vx-size) var(--vx-font);
+  color: var(--vx-link);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.vortex07-active #Container .user-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+html.vortex07-active #Container .user-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 4px 0;
+}
+
+html.vortex07-active #Container .user-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  flex: none;
+  padding: 0 4px 6px;
+  border: none;
+  background: transparent;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: none;
+  overflow: visible;
+  position: relative;
+}
+
+html.vortex07-active #Container .user-card::before {
+  display: none;
+}
+
+html.vortex07-active #Container .user-card-avatar {
+  width: 68px;
+  height: 68px;
+  border: 1px solid var(--vx-border);
+  object-fit: cover;
+  background: var(--vx-header-bg);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+html.vortex07-active #Container .user-card-name {
+  display: block;
+  width: 100%;
+  margin: 2px 0;
+  padding: 0 2px;
+  font: bold var(--vx-size) var(--vx-ui-font);
+  color: var(--vx-link);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.vortex07-active #Container .user-card-actions {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 2px;
+}
+
+html.vortex07-active #Container .user-card-actions button,
+html.vortex07-active #Container .user-card-actions .tag {
+  width: 100%;
+  font: bold 10px / 1.2 var(--vx-ui-font);
+  padding: 3px 4px;
+  box-sizing: border-box;
+}
+
+html.vortex07-active #Container .user-card-actions button {
+  background: linear-gradient(180deg, var(--vx-btn-highlight) 0%, var(--vx-btn-face) 100%);
+  color: var(--vx-text);
+  border: var(--vx-outset);
+  cursor: pointer;
+}
+
+html.vortex07-active #Container .user-card-actions button:hover {
+  background: var(--vx-nav-hover);
+}
+
+html.vortex07-active #Container .user-list .user-row-actions button,
+html.vortex07-active #Container .user-row-actions button {
+  font: bold 10px / 1.2 var(--vx-ui-font);
+  padding: 2px 8px;
+  background: linear-gradient(180deg, var(--vx-btn-highlight) 0%, var(--vx-btn-face) 100%);
+  border: var(--vx-outset);
+  cursor: pointer;
+}
+
+html.vortex07-active #Container .user-list .user-row-actions button:hover,
+html.vortex07-active #Container .user-row-actions button:hover {
+  background: var(--vx-nav-hover);
+}
+
+html.vortex07-active #Container .user-card:hover {
+  background: transparent;
+  border: none;
+}
+
+html.vortex07-active #Container .btn-primary {
+  background: var(--vx-link);
+  color: #fff;
+  border: 1px solid var(--vx-border);
+}
+
+html.vortex07-active #Container .btn-secondary,
+html.vortex07-active #Container .btn-ghost {
+  background: var(--vx-btn-face);
+  color: var(--vx-text);
+  border: var(--vx-outset);
+}
+
+html.vortex07-active #Container .tag {
+  font-size: 10px;
+  color: #666;
+  padding: 1px 4px;
+  border: 1px solid var(--vx-border-light);
+  background: var(--vx-shell-bg);
+}
+
+html.vortex07-active #Container .pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--vx-border-light);
+}
+
+html.vortex07-active #Container .pagination button {
+  font: bold 10px / 1.2 var(--vx-ui-font);
+  padding: 2px 10px;
+  background: linear-gradient(180deg, var(--vx-btn-highlight) 0%, var(--vx-btn-face) 100%);
+  border: var(--vx-outset);
+  cursor: pointer;
+}
+
+html.vortex07-active #Container .pagination button:hover:not(:disabled) {
+  background: var(--vx-nav-hover);
+}
+
+html.vortex07-active #Container .pagination-info {
+  font-size: var(--vx-size);
+  color: #555;
+}
+
+html.vortex07-active #Body > .page:has(.tab-bar) {
+  padding: 8px;
+  border: 1px solid var(--vx-border);
+  background: var(--vx-panel-bg);
+  box-shadow: var(--vx-panel-inset);
+  box-sizing: border-box;
+}
+
+html.vortex07-active #Body > .page.vortex07-social-shell {
+  background: linear-gradient(180deg, var(--vx-panel-bg) 0%, var(--vx-shell-bg) 100%);
+}
+
+html.vortex07-active #Body > .page:has(.tab-bar) .page-title,
+html.vortex07-active #Body > .page.vortex07-social-shell .page-title {
+  margin: -8px -8px 8px;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--vx-border);
+  background: linear-gradient(180deg, #ece8f6 0%, var(--vx-section-head) 100%);
+  box-shadow: var(--vx-panel-depth);
+}
+
+html.vortex07-active #Container .tab-btn .badge {
+  margin-left: 4px;
+  background: var(--vx-cta);
+  border-color: #8a7010;
+  color: var(--vx-text);
+}
+
+html.vortex07-active #Container .page-title {
+  font: bold 12px / 1.2 var(--vx-display-font);
+  margin: 0;
+  padding: 3px 5px;
+  color: var(--vx-text);
+  background: var(--vx-section-head);
+  border-bottom: 1px solid var(--vx-border-light);
+}
+
+/* --------------------------------------------------------- */

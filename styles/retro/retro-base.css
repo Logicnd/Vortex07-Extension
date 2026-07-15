@@ -1,0 +1,652 @@
+/* Vortex07 — 2007 Roblox / Windows XP retro layer (loads after styles.css) */
+
+/* Kill soft modern shadows site-wide */
+html.vortex07-active #Container,
+html.vortex07-active #Container .games-section,
+html.vortex07-active #Container .friends-section,
+html.vortex07-active #Container .home-section,
+html.vortex07-active #Container .game-card,
+html.vortex07-active #Container .user-card,
+html.vortex07-active #Body > .page,
+html.vortex07-active .vortex07-home-leaderboard {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+html.vortex07-active body,
+html.vortex07-active #Container {
+  font-family: Verdana, Tahoma, Arial, sans-serif;
+  font-size: 11px;
+}
+
+html.vortex07-active a {
+  color: var(--vx-link);
+}
+
+html.vortex07-active a:hover {
+  color: var(--vx-link-hover);
+}
+
+/* XP-style section headers (forum / home panels) */
+html.vortex07-active #Container .games-section .section-header,
+html.vortex07-active #Container .friends-section .section-header,
+html.vortex07-active #Container .home-section .section-header,
+html.vortex07-active .vortex07-guestbook-section .section-header {
+  padding: 4px 8px;
+  border: 1px solid var(--vx-nav-bg);
+  border-bottom-color: #3a3068;
+  background: linear-gradient(180deg, var(--vx-nav-hover) 0%, var(--vx-nav-bg) 100%);
+}
+
+html.vortex07-active #Container .games-section .section-title,
+html.vortex07-active #Container .friends-section .section-title,
+html.vortex07-active #Container .home-section .section-title,
+html.vortex07-active .vortex07-guestbook-section .section-title {
+  color: #fff;
+  font: bold 11px Verdana, Tahoma, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+html.vortex07-active #Container .friends-section .section-link,
+html.vortex07-active #Container .games-section .section-link,
+html.vortex07-active #Container .home-section .section-link {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+html.vortex07-active #Container .friends-section .section-link:hover,
+html.vortex07-active #Container .games-section .section-link:hover,
+html.vortex07-active #Container .home-section .section-link:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* XP buttons */
+html.vortex07-active #Container button,
+html.vortex07-active #Container .btn,
+html.vortex07-active #Container input[type="submit"],
+html.vortex07-active #Container .vortex07-forum-submit,
+html.vortex07-active #Container .vortex07-forum-action-btn {
+  border-radius: 0;
+  border: 1px solid var(--vx-btn-shadow);
+  border-top-color: var(--vx-btn-highlight);
+  border-left-color: var(--vx-btn-highlight);
+  background: linear-gradient(180deg, #fff 0%, var(--vx-btn-face) 55%, #d4d0c8 100%);
+}
+
+html.vortex07-active .vortex07-xp-btn,
+html.vortex07-active #Container .vortex07-xp-btn {
+  border-radius: 0;
+  border: 1px solid var(--vx-btn-shadow);
+  border-top-color: var(--vx-btn-highlight);
+  border-left-color: var(--vx-btn-highlight);
+  background: linear-gradient(180deg, #fff 0%, var(--vx-btn-face) 55%, #d4d0c8 100%);
+  font: 11px Tahoma, "MS Sans Serif", Arial, sans-serif;
+  color: #000;
+  cursor: pointer;
+}
+
+html.vortex07-active .vortex07-xp-btn:active,
+html.vortex07-active #Container .vortex07-xp-btn:active {
+  border-color: var(--vx-btn-highlight) var(--vx-btn-shadow) var(--vx-btn-shadow) var(--vx-btn-highlight);
+  background: linear-gradient(180deg, #d4d0c8 0%, var(--vx-btn-face) 45%, #fff 100%);
+}
+
+html.vortex07-active #Container button,
+html.vortex07-active #Container .btn {
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+html.vortex07-active #Container input[type="text"],
+html.vortex07-active #Container input[type="search"],
+html.vortex07-active #Container input[type="email"],
+html.vortex07-active #Container input[type="password"],
+html.vortex07-active #Container textarea,
+html.vortex07-active #Container select {
+  border-radius: 0;
+  border: 1px solid var(--vx-border);
+  background: #fff;
+  font: 11px Verdana, Tahoma, Arial, sans-serif;
+}
+
+html.vortex07-active #Alerts .vortex07-search-host input,
+html.vortex07-active #vortex07-search-slot .vortex07-search-host input {
+  border-radius: 0;
+  border: 1px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  background: #fff;
+  font: 11px Tahoma, "MS Sans Serif", Arial, sans-serif;
+}
+
+html.vortex07-active #Alerts .vortex07-search-go,
+html.vortex07-active #vortex07-search-slot .vortex07-search-go {
+  border-radius: 0;
+  font: 11px Tahoma, "MS Sans Serif", Arial, sans-serif;
+}
+
+/* Profile — open layout, no rogue white carousel boxes */
+html.vortex07-active #Body > .page:has(.profile-header),
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) {
+  border: none !important;
+  background: transparent !important;
+  overflow: hidden;
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section {
+  border: 1px solid var(--vx-border);
+  background: var(--vx-panel-bg);
+  overflow: hidden;
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section .section-header,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section .section-header {
+  margin-bottom: 0;
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-grid,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-grid,
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section .friends-grid,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section .friends-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  padding: 8px;
+  overflow: hidden;
+  background: var(--vx-panel-bg);
+  border: none;
+}
+
+/* Profile friends carousel — same paging chrome as home */
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section .carousel-wrap,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section .carousel-wrap,
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section .vortex07-friends-carousel-wrap,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section .vortex07-friends-carousel-wrap {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 6px 24px 4px;
+  box-sizing: border-box;
+  background: var(--vx-panel-bg);
+  border-top: 1px solid var(--vx-border-inner);
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section .carousel-arrow.vortex07-carousel-btn,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section .carousel-arrow.vortex07-carousel-btn {
+  display: block !important;
+  visibility: visible !important;
+  width: 20px;
+  height: 28px;
+  min-width: 20px;
+  min-height: 28px;
+  padding: 0;
+  font: bold 14px/1 Tahoma, Arial, sans-serif;
+  border: 1px solid var(--vx-btn-shadow);
+  border-top-color: #fff;
+  border-left-color: #fff;
+  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%);
+  box-shadow: none !important;
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section .carousel-prev.vortex07-carousel-btn,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section .carousel-prev.vortex07-carousel-btn {
+  left: 3px;
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section .carousel-next.vortex07-carousel-btn,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section .carousel-next.vortex07-carousel-btn {
+  right: 3px;
+}
+
+html.vortex07-active #Body > .page:has(.profile-header) .friends-section .vortex07-friends-page-indicator,
+html.vortex07-active #Body > .page:has(.vortex07-profile-header) .friends-section .vortex07-friends-page-indicator {
+  display: block !important;
+}
+
+/* Home friends carousel — contained, not overflowing */
+html.vortex07-active #Container .friends-section .carousel-wrap,
+html.vortex07-active #Container .friends-section .vortex07-friends-carousel-wrap {
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: var(--vx-panel-bg);
+  border-top: 1px solid var(--vx-border-inner);
+}
+
+html.vortex07-active #Container .section-header + .friends-row,
+html.vortex07-active #Container .section-header + .carousel-wrap,
+html.vortex07-active #Container .section-header + .games-grid {
+  border-top: none;
+}
+
+/* Nav tabs — classic raised bar */
+html.vortex07-active #Container .nav-tabs a,
+html.vortex07-active #Container .nav-tab,
+html.vortex07-active #Container .vortex07-nav-tab {
+  border-radius: 0;
+  font: bold 11px Tahoma, Arial, sans-serif;
+}
+
+/* Game cards — flat retro tiles */
+html.vortex07-active #Container .game-card {
+  border: 1px solid var(--vx-border-inner);
+  background: var(--vx-panel-bg);
+}
+
+html.vortex07-active #Container .game-card:hover {
+  border-color: var(--vx-link);
+  background: var(--vx-tint-lavender);
+}
+
+/* Social / catalog shells */
+html.vortex07-active #Body > .page.vortex07-page-shell,
+html.vortex07-active #Body > .catalog-container.vortex07-page-shell {
+  border: 1px solid var(--vx-border);
+  background: var(--vx-panel-bg);
+}
+
+html.vortex07-active #Body > .page.vortex07-social-shell {
+  border: 1px solid var(--vx-border);
+  background: linear-gradient(180deg, #fff 0%, #f0f0f8 100%);
+}
+
+/* Footer */
+html.vortex07-active #Footer {
+  border-top: 1px solid var(--vx-border);
+  background: var(--vx-header-bg);
+  box-shadow: none !important;
+}
+
+/* Dark mode — keep retro flat panels */
+html.vortex07-active.vortex07-dark {
+  --vx-page-bg: #1a1830;
+  --vx-shell-bg: #221e38;
+  --vx-panel-bg: #2a2640;
+  --vx-header-bg: #322e4a;
+  --vx-section-head: #3a3558;
+  --vx-link: #8ab4e8;
+  --vx-border: #4a4568;
+  --vx-border-inner: #3a3558;
+  --vx-tint-lavender: #322e4a;
+}
+
+html.vortex07-active.vortex07-dark #Container .games-section .section-title,
+html.vortex07-active.vortex07-dark #Container .friends-section .section-title,
+html.vortex07-active.vortex07-dark #Container .home-section .section-title {
+  color: #fff;
+}
+
+/* Header — flush banner into nav (no gap stripe) */
+html.vortex07-active #Header {
+  border-bottom: none;
+}
+
+html.vortex07-active #Banner {
+  border-bottom: none;
+  margin: 0;
+}
+
+html.vortex07-active .Navigation {
+  margin-top: 0;
+}
+
+/* Profile header — retro stats row with inline rep */
+html.vortex07-active #Container .profile-header,
+html.vortex07-active #Container .vortex07-profile-header {
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
+
+html.vortex07-active #Container .profile-username {
+  font: bold 14px/1.15 Tahoma, Verdana, Arial, sans-serif;
+  color: #004466;
+  letter-spacing: 0.01em;
+}
+
+html.vortex07-active #Container .profile-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 12px;
+  margin: 4px 0 0;
+}
+
+html.vortex07-active #Container .profile-stat {
+  display: inline-flex;
+  align-items: baseline;
+  margin-right: 0;
+  font: 11px Verdana, Tahoma, Arial, sans-serif;
+  color: #555;
+}
+
+html.vortex07-active #Container .profile-stat strong {
+  color: #222;
+  font-weight: bold;
+}
+
+html.vortex07-active #Container .vortex07-profile-meta-stack .profile-stats {
+  margin: 6px 0 0;
+}
+
+html.vortex07-active #Container .profile-stats .vortex07-profile-stat-sep {
+  color: #999;
+  font: bold 11px/1 Verdana, Tahoma, Arial, sans-serif;
+  user-select: none;
+  margin: 0 2px 0 0;
+}
+
+html.vortex07-active #Container .profile-stats .vortex07-rep-inline-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+
+html.vortex07-active #Container .profile-stats .vortex07-rep-thumb-btn {
+  padding: 1px 5px;
+}
+
+html.vortex07-active #Container .profile-stats .vortex07-rep-inline-count {
+  font: bold 11px/1 Tahoma, Verdana, Arial, sans-serif;
+  color: #006699;
+}
+
+/* Light mode profile panel */
+html.vortex07-active #Container .profile-header,
+html.vortex07-active #Container .vortex07-profile-header {
+  background: linear-gradient(180deg, #eef0fa 0%, #fff 55%);
+  border: none;
+  box-shadow: none;
+}
+
+/* Dark mode profile — distinct palette */
+html.vortex07-active.vortex07-dark #Container .profile-header,
+html.vortex07-active.vortex07-dark #Container .vortex07-profile-header {
+  background: linear-gradient(180deg, #3a3258 0%, #2a2640 55%);
+  border: none;
+  box-shadow: none;
+}
+
+html.vortex07-active.vortex07-dark #Container .profile-username {
+  color: #9ac4f0;
+}
+
+html.vortex07-active.vortex07-dark #Container .profile-stat {
+  color: #b0a8c8;
+}
+
+html.vortex07-active.vortex07-dark #Container .profile-stat strong {
+  color: #e8e0f8;
+}
+
+html.vortex07-active.vortex07-dark #Container .profile-stats .vortex07-profile-stat-sep {
+  color: #6a6088;
+}
+
+html.vortex07-active.vortex07-dark #Container .profile-stats .vortex07-rep-inline-count {
+  color: #8ab4e8;
+}
+
+html.vortex07-active.vortex07-dark #Container .profile-stats .vortex07-rep-svg-stroke {
+  stroke: #8ab4e8;
+}
+
+html.vortex07-active.vortex07-dark #Container .profile-stats .vortex07-rep-thumb-btn.is-on .vortex07-rep-svg-fill {
+  fill: #8ab4e8;
+}
+
+html.vortex07-active.vortex07-dark .Navigation {
+  background: linear-gradient(180deg, #4a3a78 0%, #3a2e68 55%, #2e2458 100%);
+  border-bottom-color: #1a1430;
+}
+
+/* Download page — 2007 rbx panel (matches home grey headers + purple stripe) */
+html.vortex07-active #Container.vortex07-route-download #Body {
+  padding: 8px 10px 10px;
+  background: var(--vx-page-bg);
+}
+
+html.vortex07-active #Container.vortex07-route-download #Body > .page,
+html.vortex07-active #Container.vortex07-route-download .vortex07-download-shell {
+  border: 1px solid var(--vx-border);
+  background: var(--vx-panel-bg);
+  padding: 0;
+  margin: 0;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-hero,
+html.vortex07-active #Container.vortex07-route-download .vortex07-dl-hero-compact {
+  text-align: left;
+  padding: 5px 8px 6px;
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid var(--vx-nav-bg);
+  background: linear-gradient(180deg, #f8f8ff 0%, var(--vx-section-head) 100%) !important;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-hero-title {
+  font: bold 11px Tahoma, Verdana, Arial, sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #333 !important;
+  margin: 0;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-hero-sub {
+  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  color: #555;
+  margin: 2px 0 0;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-cards {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--vx-border-inner);
+  background: var(--vx-panel-bg);
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-card {
+  display: table-cell;
+  vertical-align: top;
+  width: 33.33%;
+  margin: 0;
+  padding: 10px 10px 12px;
+  border: none;
+  background: var(--vx-panel-bg) !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-card + .dl-card {
+  border-left: 1px solid var(--vx-border);
+  border-top: none;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-card-platform {
+  font: bold 11px Tahoma, Verdana, Arial, sans-serif;
+  color: #004466;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-card-header {
+  display: block;
+  margin: 0 0 8px;
+  padding: 0 0 4px;
+  border: none;
+  border-bottom: 1px solid var(--vx-border-inner);
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-card-header i,
+html.vortex07-active #Container.vortex07-route-download .dl-card-header svg {
+  display: none;
+}
+
+html.vortex07-active #Container.vortex07-route-download .btn-download,
+html.vortex07-active #Container.vortex07-route-download [class*="btn-download"]:not(.btn-soon) {
+  display: inline-block;
+  min-width: 0;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 0 8px;
+  padding: 4px 10px;
+  font: bold 11px Tahoma, "MS Sans Serif", Arial, sans-serif;
+  text-align: center;
+  border-radius: 0;
+  box-shadow: none !important;
+}
+
+html.vortex07-active #Container.vortex07-route-download .btn-soon,
+html.vortex07-active #Container.vortex07-route-download .btn-download:disabled,
+html.vortex07-active #Container.vortex07-route-download [class*="btn-download"].btn-soon {
+  display: inline-block;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 0 8px;
+  padding: 4px 10px;
+  font: bold 11px Tahoma, Arial, sans-serif;
+  text-align: center;
+  color: #888 !important;
+  background: linear-gradient(180deg, #f0f0f0 0%, #d8d8d8 100%) !important;
+  border: 1px solid #999 !important;
+  border-top-color: #fff !important;
+  border-left-color: #eee !important;
+  cursor: default;
+  box-shadow: none !important;
+}
+
+html.vortex07-active #Container.vortex07-route-download .btn-discord {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 3px 12px;
+  font: bold 11px Tahoma, Arial, sans-serif;
+  border-radius: 0;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-notice {
+  margin: 6px 0 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: 10px/1.5 Verdana, Tahoma, Arial, sans-serif;
+  color: #333;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-notice ol {
+  margin: 0;
+  padding-left: 16px;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-notice li {
+  margin: 0 0 5px;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-notice li:last-child {
+  margin-bottom: 0;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-notice p {
+  margin: 6px 0 0;
+  font: 10px/1.45 Verdana, Tahoma, Arial, sans-serif;
+  color: #555;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-code {
+  font: 10px "Courier New", Courier, monospace;
+  background: #fff;
+  border: 2px inset var(--vx-border);
+  padding: 4px 6px;
+  margin-top: 4px;
+  display: block;
+  word-break: break-all;
+  color: #222;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-footer-note {
+  margin: 0;
+  padding: 6px 10px 7px;
+  border: none;
+  border-top: 1px solid var(--vx-border);
+  background: linear-gradient(180deg, #f0f4fc 0%, var(--vx-section-head) 100%);
+  font: 10px/1.45 Verdana, Tahoma, Arial, sans-serif;
+  color: #444;
+  text-align: center;
+}
+
+html.vortex07-active #Container.vortex07-route-download .dl-footer-note a {
+  color: #006699;
+  font-weight: bold;
+}
+
+@media (max-width: 720px) {
+  html.vortex07-active #Container.vortex07-route-download .dl-cards {
+    display: block;
+  }
+
+  html.vortex07-active #Container.vortex07-route-download .dl-card {
+    display: block;
+    width: 100%;
+  }
+
+  html.vortex07-active #Container.vortex07-route-download .dl-card + .dl-card {
+    border-left: none;
+    border-top: 1px solid var(--vx-border);
+  }
+}
+
+/* Download — dark mode */
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-hero,
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .vortex07-dl-hero-compact {
+  background: linear-gradient(180deg, #3a3558 0%, #322e4a 100%) !important;
+  border-bottom-color: #6e5cb0;
+}
+
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-hero-title {
+  color: #e8e0f8 !important;
+}
+
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-hero-sub {
+  color: #b0a8c8;
+}
+
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-card-platform {
+  color: #9ac4f0;
+}
+
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-notice,
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-notice p {
+  color: #c8c0dc;
+}
+
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-code {
+  background: #1e1a30;
+  color: #e0e0f0;
+  border-color: #4a4568;
+}
+
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-footer-note {
+  color: #b0a8c8;
+  background: linear-gradient(180deg, #322e4a 0%, #2a2640 100%);
+}
+
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-footer-note a {
+  color: #8ab4e8;
+}
+
+html.vortex07-active.vortex07-dark #Container.vortex07-route-download .dl-card + .dl-card {
+  border-left-color: #4a4568;
+}

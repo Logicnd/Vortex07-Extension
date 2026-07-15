@@ -1,0 +1,441 @@
+/* 08 EXTENSION — search dropdown                            */
+/* --------------------------------------------------------- */
+
+html.vortex07-active .vortex07-search-host,
+html.vortex07-active #Alerts .vortex07-search-host {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+html.vortex07-active .vortex07-search-host input {
+  width: 132px;
+  height: 20px;
+  border: 1px solid;
+  border-color: var(--vx-btn-shadow) var(--vx-btn-highlight) var(--vx-btn-highlight)
+    var(--vx-btn-shadow);
+  background: #fff;
+  font: 11px Tahoma, "MS Sans Serif", Arial, sans-serif;
+  padding: 1px 4px;
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+html.vortex07-active .vortex07-search-go {
+  height: 20px;
+  padding: 0 8px;
+  line-height: 18px;
+  font: 11px Tahoma, "MS Sans Serif", Arial, sans-serif;
+}
+
+#vortex07-user-results {
+  position: fixed;
+  width: 240px;
+  background: #fff;
+  border: 1px solid var(--vx-border);
+  box-shadow: none;
+  z-index: 2147483647;
+  font: 11px Tahoma, "MS Sans Serif", Arial, sans-serif;
+  display: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+#vortex07-user-results.vortex07-results-open,
+#vortex07-user-results:not([hidden]) {
+  display: block;
+}
+
+.vortex07-search-section-title {
+  padding: 3px 6px;
+  background: #ece9d8;
+  border-bottom: 1px solid #c0c0c0;
+  font: bold 9px / 1.2 Tahoma, "MS Sans Serif", Arial, sans-serif;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.vortex07-search-highlight {
+  background: #ffff99;
+}
+
+.vortex07-user-result {
+  display: block;
+  min-height: 28px;
+  padding: 0;
+  border-bottom: 1px solid #c0c0c0;
+  color: #000;
+  text-decoration: none;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.vortex07-player-result-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 3px 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vortex07-user-last-online {
+  display: block;
+  font: 9px / 1.2 Tahoma, "MS Sans Serif", Arial, sans-serif;
+  color: #666;
+}
+
+.vortex07-compare-link {
+  flex: 0 0 auto;
+  align-self: center;
+  margin: 0 6px 0 0;
+  padding: 1px 6px;
+  border: 1px solid var(--vx-border-light);
+  background: var(--vx-tint-lavender);
+  font: 9px/1.2 Tahoma, "MS Sans Serif", Arial, sans-serif;
+  color: var(--vx-link);
+  cursor: pointer;
+}
+
+.vortex07-compare-link:hover {
+  background: var(--vx-tint-lavender);
+  color: var(--vx-link-hover);
+}
+
+html.vortex07-active .vortex07-compare-picking {
+  outline: 1px solid #7a68bc;
+  background: var(--vx-tint-lavender);
+}
+
+.vortex07-user-result:hover,
+.vortex07-player-result:hover {
+  background: var(--vx-tint-lavender);
+}
+
+.vortex07-user-muted {
+  padding: 8px;
+  font-size: 10px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  background: #faf9fd;
+}
+
+.vortex07-user-avatar {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--vx-border-inner);
+  background: var(--vx-shell-bg);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.vortex07-user-avatar-img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  display: block;
+  border: none;
+}
+
+.vortex07-user-avatar-letter {
+  display: block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: #1d1033;
+}
+
+.vortex07-user-name {
+  font-weight: bold;
+  color: var(--vx-link);
+  font-size: var(--vx-size);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vortex07-user-sub {
+  font-size: 10px;
+  color: #555;
+}
+
+.vortex07-user-banned {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: bold;
+  color: #5a4a9a;
+  text-transform: uppercase;
+}
+
+.vortex07-user-scary {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: bold;
+  color: #922b21;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.vortex07-user-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.vortex07-user-name-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.vortex07-user-name-row .vortex07-user-name {
+  min-width: 0;
+}
+
+.vortex07-search-role-badge {
+  flex-shrink: 0;
+}
+
+.vortex07-search-online-dot {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.vortex07-status-ingame {
+  background: #0066cc;
+}
+
+.vortex07-player-result .vortex07-global-rep {
+  margin-left: 0;
+  flex-shrink: 0;
+}
+
+.vortex07-user-rep-row .vortex07-global-rep,
+.vortex07-friend-meta .vortex07-global-rep,
+.vortex07-user-card-meta .vortex07-global-rep {
+  margin-top: 0;
+}
+
+/* Dev + rainbow avatar frames — inset gradient ring inside the avatar box */
+.vortex07-user-avatar.vortex07-dev-avatar-frame,
+.vortex07-hover-avatar-wrap.vortex07-dev-avatar-frame,
+html.vortex07-active #Container .profile-avatar-wrap.vortex07-dev-avatar-frame,
+html.vortex07-active #Container .friend-avatar-wrap.vortex07-dev-avatar-frame {
+  padding: 2px;
+  border: none !important;
+  background: linear-gradient(135deg, #c9a227 0%, #5c4a9e 50%, #c9a227 100%) !important;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.vortex07-user-avatar.vortex07-rainbow-avatar-frame,
+.vortex07-hover-avatar-wrap.vortex07-rainbow-avatar-frame,
+html.vortex07-active #Container .profile-avatar-wrap.vortex07-rainbow-avatar-frame,
+html.vortex07-active #Container .friend-avatar-wrap.vortex07-rainbow-avatar-frame {
+  padding: 3px;
+  border: none !important;
+  background: linear-gradient(
+    90deg,
+    #e40303,
+    #ff8c00,
+    #ffed00,
+    #008026,
+    #24408e,
+    #732982,
+    #e40303
+  ) !important;
+  background-size: 400% 100% !important;
+  animation: vortex07-rainbow-shift 10s linear infinite !important;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.vortex07-user-avatar.vortex07-dev-avatar-frame .vortex07-user-avatar-img,
+.vortex07-user-avatar.vortex07-dev-avatar-frame .vortex07-user-avatar-letter,
+.vortex07-user-avatar.vortex07-rainbow-avatar-frame .vortex07-user-avatar-img,
+.vortex07-user-avatar.vortex07-rainbow-avatar-frame .vortex07-user-avatar-letter,
+.vortex07-hover-avatar-wrap.vortex07-dev-avatar-frame .vortex07-hover-avatar-img,
+.vortex07-hover-avatar-wrap.vortex07-dev-avatar-frame .vortex07-hover-avatar-fallback,
+.vortex07-hover-avatar-wrap.vortex07-rainbow-avatar-frame .vortex07-hover-avatar-img,
+.vortex07-hover-avatar-wrap.vortex07-rainbow-avatar-frame .vortex07-hover-avatar-fallback,
+html.vortex07-active #Container .profile-avatar-wrap.vortex07-dev-avatar-frame .profile-avatar,
+html.vortex07-active #Container .profile-avatar-wrap.vortex07-rainbow-avatar-frame .profile-avatar,
+html.vortex07-active #Container .friend-avatar-wrap.vortex07-dev-avatar-frame .friend-avatar,
+html.vortex07-active #Container .friend-avatar-wrap.vortex07-rainbow-avatar-frame .friend-avatar {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  border: none !important;
+  object-fit: cover;
+  display: block;
+  background: var(--vx-panel-bg);
+  box-sizing: border-box;
+}
+
+@keyframes vortex07-rainbow-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 400% 50%;
+  }
+}
+
+#vortex07-hover-preview,
+#vortex07-hover-preview.vortex07-hover-preview-rich {
+  border: 1px solid var(--vx-border-light);
+  background: linear-gradient(180deg, var(--vx-shell-bg) 0%, var(--vx-tint-lavender) 100%);
+  padding: 9px 9px 7px;
+  width: 180px;
+  font: var(--vx-size) var(--vx-font);
+  box-sizing: border-box;
+  color: var(--vx-text);
+  box-shadow: var(--vx-shell-shadow);
+}
+
+.vortex07-hover-preview-body {
+  text-align: center;
+}
+
+.vortex07-hover-avatar-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 4px;
+  overflow: hidden;
+  border: 1px solid var(--vx-border);
+  background: var(--vx-panel-bg);
+  box-sizing: border-box;
+}
+
+.vortex07-hover-avatar-img,
+.vortex07-hover-avatar-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vortex07-hover-avatar-fallback {
+  line-height: 44px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #1d1033;
+}
+
+.vortex07-hover-name-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  max-width: 100%;
+}
+
+.vortex07-hover-name {
+  font: bold 11px / 1.2 var(--vx-display-font);
+  color: var(--vx-link);
+}
+
+.vortex07-hover-handle {
+  font-size: 10px;
+  color: #555;
+  line-height: 1.2;
+}
+
+.vortex07-hover-ext-status-host {
+  min-height: 0;
+}
+
+.vortex07-hover-ext-status-host:empty {
+  display: none;
+}
+
+.vortex07-hover-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin-top: 4px;
+}
+
+.vortex07-hover-status-pill {
+  display: inline-block;
+  padding: 1px 5px;
+  font: bold 8px / 1.3 var(--vx-ui-font);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 1px solid var(--vx-border-inner);
+  background: var(--vx-tint-lavender);
+  color: #444;
+}
+
+.vortex07-hover-status-pill--online {
+  color: #0a6b0a;
+  border-color: #8ac88a;
+  background: #eef8ee;
+}
+
+.vortex07-hover-status-pill--in-game {
+  color: #004488;
+  border-color: #8ab4d8;
+  background: #eef4fc;
+}
+
+.vortex07-hover-status-pill--offline {
+  color: #666;
+}
+
+.vortex07-hover-status {
+  margin-top: 2px;
+  font-size: 9px;
+  font-weight: bold;
+  color: #0a0;
+}
+
+.vortex07-hover-rep {
+  font-size: 9px;
+  color: var(--vx-link);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.vortex07-hover-banned {
+  margin-top: 3px;
+  color: #5a4a9a;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.vortex07-hover-hint {
+  margin-top: 4px;
+  font-size: 9px;
+  color: #666;
+  font-style: italic;
+}
+
+/* --------------------------------------------------------- */

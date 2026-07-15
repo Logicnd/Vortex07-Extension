@@ -1,0 +1,10 @@
+{
+  "name": "vortex07",
+  "version": "2.6.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "api:deploy": "node scripts/vercel/deploy.js",
+    "api:verify": "node scripts/vercel/verify.js"
+  }
+}

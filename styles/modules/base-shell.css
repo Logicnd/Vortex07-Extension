@@ -1,0 +1,383 @@
+/* --------------------------------------------------------- */
+/* 02 BASE (scoped — only when extension active)             */
+/* --------------------------------------------------------- */
+
+html.vortex07-active,
+html.vortex07-active body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--vx-page-bg);
+  color: var(--vx-text);
+  font-family: var(--vx-font);
+  font-size: var(--vx-size);
+  line-height: var(--vx-line);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: auto;
+}
+
+html.vortex07-active #Container a {
+  color: var(--vx-link);
+  text-decoration: none;
+}
+
+html.vortex07-active #Container a:hover {
+  color: var(--vx-link-hover);
+  text-decoration: underline;
+}
+
+html.vortex07-active #Container img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+
+/* Avatar frames — fill wrapper (override host inline px sizing / object-fit: contain) */
+html.vortex07-active #Container .profile-avatar-wrap,
+html.vortex07-active #Container .vortex07-profile-avatar-slot,
+html.vortex07-active #Container .friend-avatar-wrap,
+html.vortex07-active #Container .user-row-avatar-wrap {
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+html.vortex07-active #Container .profile-avatar-wrap > .profile-avatar,
+html.vortex07-active #Container .vortex07-profile-avatar-slot > .profile-avatar,
+html.vortex07-active #Container .friend-avatar-wrap > .friend-avatar,
+html.vortex07-active #Container .friend-avatar-wrap > img:not(.vortex07-retro-badge-img),
+html.vortex07-active #Container .user-row-avatar-wrap > .user-row-avatar,
+html.vortex07-active #Container .user-row-avatar-wrap > img:not(.vortex07-retro-badge-img) {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+html.vortex07-active #Container .user-row > .user-row-avatar,
+html.vortex07-active #Container .user-card > .user-card-avatar {
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+/* Flatten modern chrome inside shell body only */
+html.vortex07-active #Container #Body *:not(.vortex07-rainbow-avatar-frame):not(.vortex07-dev-avatar-frame),
+html.vortex07-active #Container #Body *:not(.vortex07-rainbow-avatar-frame):not(.vortex07-dev-avatar-frame)::before,
+html.vortex07-active #Container #Body *:not(.vortex07-rainbow-avatar-frame):not(.vortex07-dev-avatar-frame)::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  backdrop-filter: none !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* --------------------------------------------------------- */
+/* 03 SHELL — #Container layout (content.js injects this)    */
+/* --------------------------------------------------------- */
+
+html.vortex07-active #Container {
+  width: var(--vx-shell-width);
+  max-width: var(--vx-shell-width);
+  margin: 10px auto 12px;
+  padding: 0;
+  background: var(--vx-shell-bg);
+  border: 1px solid var(--vx-border-strong);
+  box-shadow: var(--vx-shell-shadow);
+  box-sizing: border-box;
+  position: relative;
+  font-family: var(--vx-font);
+}
+
+html.vortex07-active body:has(#Container) > .navbar,
+html.vortex07-active body:has(#Container) > .site-footer,
+html.vortex07-active body:has(#Container) > .site-header,
+html.vortex07-active body:has(#Container) > .top-bar,
+html.vortex07-active body:has(#Container) > .app-header {
+  display: none !important;
+}
+
+html.vortex07-active .vortex07-native-navbar-hidden {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+html.vortex07-active #Header {
+  background: var(--vx-header-bg);
+  border-bottom: 1px solid var(--vx-border);
+}
+
+html.vortex07-active #Banner {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  min-height: 56px;
+  padding: 4px 8px;
+  gap: 8px;
+  box-sizing: border-box;
+  background-image: var(--v07-topbar-bg, none), linear-gradient(180deg, var(--vx-tint-lavender) 0%, var(--vx-border-inner) 100%);
+  background-size: cover, auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  border-bottom: 1px solid var(--vx-border-light);
+}
+
+html.vortex07-active.vortex07-dark #Banner {
+  background-image:
+    linear-gradient(180deg, rgba(35, 25, 55, 0.78) 0%, rgba(35, 25, 55, 0.92) 100%),
+    var(--v07-topbar-bg, none),
+    linear-gradient(180deg, var(--vx-tint-lavender) 0%, var(--vx-border-inner) 100%);
+  background-size: auto, cover, auto;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center, center, center;
+}
+
+html.vortex07-active #Options,
+html.vortex07-active #Authentication {
+  flex: 0 0 auto;
+  font-size: var(--vx-size);
+  white-space: nowrap;
+}
+
+html.vortex07-active #Authentication .vortex07-auth-guest a,
+html.vortex07-active #Authentication .vortex07-auth-user a {
+  color: var(--vx-link);
+  font-weight: bold;
+}
+
+html.vortex07-active #Authentication .vortex07-auth-user {
+  color: var(--vx-text);
+}
+
+html.vortex07-active #Authentication .vortex07-signout-link {
+  display: inline-block;
+  margin-left: 6px;
+  padding-left: 6px;
+  border-left: 1px solid var(--vx-border-light);
+  font-size: var(--vx-size);
+  font-weight: bold;
+  color: var(--vx-link);
+}
+
+html.vortex07-active #Logo {
+  flex: 1 1 auto;
+  text-align: center;
+  min-width: 0;
+  padding: 2px 0;
+}
+
+html.vortex07-active #Logo .vortex07-logo-link {
+  display: inline-block;
+  line-height: 0;
+  border: none;
+  background: transparent;
+}
+
+html.vortex07-active #Logo img,
+html.vortex07-active #Logo a img,
+html.vortex07-active #Logo .vortex07-logo-img {
+  display: block;
+  max-height: 54px;
+  max-width: min(240px, 100%);
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  border: none;
+  background: transparent;
+  object-fit: contain;
+}
+
+html.vortex07-active #Alerts {
+  flex: 0 0 auto;
+  margin-left: auto;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+html.vortex07-active #Body {
+  padding: 12px 14px 16px;
+  background: linear-gradient(180deg, var(--vx-panel-bg) 0%, var(--vx-shell-bg) 100%);
+  min-height: 240px;
+  box-sizing: border-box;
+}
+
+html.vortex07-active #Body > .page,
+html.vortex07-active #Body > .catalog-container {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+html.vortex07-active #Footer {
+  text-align: center;
+  padding: 6px;
+  border-top: 1px solid var(--vx-border);
+  background: var(--vx-header-bg);
+}
+
+html.vortex07-active .Legalese {
+  font-size: 10px;
+  color: #333;
+  line-height: 1.35;
+}
+
+/* --------------------------------------------------------- */
+/* 04 NAVIGATION — equal-width tab row                       */
+/* --------------------------------------------------------- */
+
+html.vortex07-active .Navigation {
+  background: linear-gradient(180deg, #6a58ad 0%, var(--vx-nav-bg) 55%, #4f3f8a 100%);
+  border-bottom: 1px solid var(--vx-border-strong);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+html.vortex07-active .vortex07-nav-actions,
+html.vortex07-active .Navigation .navbar-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--vx-nav-bg);
+}
+
+html.vortex07-active .MenuItem,
+html.vortex07-active .vortex07-nav-tab,
+html.vortex07-active .Navigation .navbar-actions > a,
+html.vortex07-active .Navigation .navbar-actions > button {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 8px 4px;
+  font: bold 12px / 1.2 var(--vx-ui-font);
+  letter-spacing: 0.04em;
+  color: var(--vx-nav-text);
+  background: var(--vx-nav-bg);
+  border: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+html.vortex07-active .Navigation .navbar-actions > a:last-child,
+html.vortex07-active .Navigation .navbar-actions > button:last-child {
+  border-right: none;
+}
+
+html.vortex07-active .Navigation .navbar-actions > a:hover,
+html.vortex07-active .Navigation .navbar-actions > button:hover,
+html.vortex07-active .Navigation .MenuItem:hover,
+html.vortex07-active .Navigation .vortex07-nav-tab:hover {
+  background: var(--vx-nav-hover);
+  color: #fff;
+  text-decoration: none !important;
+}
+
+html.vortex07-active .Navigation .vortex07-nav-active {
+  background: linear-gradient(180deg, #524080 0%, var(--vx-nav-active) 100%);
+  color: #fff;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.28);
+  border-top: 1px solid rgba(255, 255, 255, 0.38);
+  padding-top: 7px;
+  text-decoration: none !important;
+}
+
+html.vortex07-active #Container .Navigation a,
+html.vortex07-active #Container .Navigation button.MenuItem,
+html.vortex07-active #Container .Navigation button.vortex07-nav-tab {
+  color: var(--vx-nav-text);
+  text-decoration: none !important;
+}
+
+html.vortex07-active #Container .Navigation a:hover,
+html.vortex07-active #Container .Navigation a:focus,
+html.vortex07-active #Container .Navigation a:active,
+html.vortex07-active #Container .Navigation a:visited {
+  color: #fff;
+  text-decoration: none !important;
+}
+
+html.vortex07-active .Navigation .Separator {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: bold;
+  background: var(--vx-nav-bg);
+  flex: 0 0 auto;
+}
+
+html.vortex07-active .vortex07-nav-actions .Separator {
+  display: none !important;
+}
+
+html.vortex07-active #Container .Navigation a,
+html.vortex07-active #Container .Navigation button.MenuItem,
+html.vortex07-active #Container .Navigation button.vortex07-nav-tab {
+  color: var(--vx-nav-text);
+}
+
+/* --------------------------------------------------------- */
+/* 05 SECTIONS — clean retro panel headers                   */
+
+html.vortex07-active #Container .section-header {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid var(--vx-border-divider);
+  background: var(--vx-section-head);
+  box-shadow: none;
+}
+
+html.vortex07-active #Container .section-title,
+html.vortex07-active #Container .section-header h2,
+html.vortex07-active #Container .section-header h3,
+html.vortex07-active #Container .page-title {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 5px 12px;
+  font: bold 11px / 1.25 var(--vx-display-font);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--vx-text);
+  background: transparent;
+  border: none;
+}
+
+html.vortex07-active #Container .section-link {
+  font-size: var(--vx-size);
+  flex: 0 0 auto;
+  align-self: center;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+html.vortex07-active #Container .section-sep {
+  display: none;
+}
+
+/* --------------------------------------------------------- */

@@ -1,57 +1,147 @@
-(function () {
-  const HOME = "https://playvortex.io/home";
-  const DISCORD = "https://discord.gg/tGbVYTdqTG";  // Vortex07 Discord server
+const SETTINGS_URL = "https://playvortex.io/home#vortex07-settings";
 
-  const defaults = {
+const POPUP_DEFAULT_SETTINGS =
+  globalThis.Vortex07SettingsSchema?.DEFAULT_SETTINGS ?? {
     enabled: true,
+    customNav: true,
+    classicFooter: true,
+    retroButtons: true,
+    userSearch: true,
+    friendRowCarousels: true,
     darkMode: false,
-    welcome: true,
-    onlineDots: true,
-    liveStats: true,
-    capGames: true
+    iconCache: true,
+    reputationApiUrl: "",
+    showExtensionStatus: true,
+    showGuestbook: true,
+    showForum: true,
+    showActivityTicker: true,
+    debugLogs: false,
+    navVisible: {},
   };
 
-  const opts = document.getElementById("opts");
-  const pill = document.getElementById("pill");
-  let s = { ...defaults };
+const POPUP_TOGGLE_IDS = [
+  "enabled",
+  "darkMode",
+  "userSearch",
+  "friendRowCarousels",
+  "iconCache",
+];
 
-  function allCheckboxes() {
-    return document.querySelectorAll("input[type=checkbox][data-key]");
+function normalizeSettings(settings) {
+  if (globalThis.Vortex07SettingsSchema?.normalizeSettings) {
+    return globalThis.Vortex07SettingsSchema.normalizeSettings(settings);
+  }
+  return { ...POPUP_DEFAULT_SETTINGS, ...(settings || {}) };
+}
+
+async function loadSettings() {
+  const data = await Vortex07Ext.storageGet("sync", {
+    vortex07Settings: POPUP_DEFAULT_SETTINGS,
+  });
+  return normalizeSettings(data.vortex07Settings);
+}
+
+async function saveSettings(settings) {
+  await Vortex07Ext.storageSet("sync", { vortex07Settings: settings });
+}
+
+function applySettingsToPopup(settings) {
+  const shell = document.getElementById("popupShell");
+  shell?.classList.toggle("popup-off", !settings.enabled);
+  document.documentElement.classList.toggle("popup-dark", Boolean(settings.darkMode));
+
+  POPUP_TOGGLE_IDS.forEach((id) => {
+    const input = document.querySelector(`[data-setting="${id}"]`);
+    if (input) input.checked = Boolean(settings[id]);
+  });
+
+  POPUP_TOGGLE_IDS.filter((id) => id !== "enabled").forEach((id) => {
+    const input = document.querySelector(`[data-setting="${id}"]`);
+    if (input) input.disabled = !settings.enabled;
+  });
+}
+
+function setSaveStatus(text, ok = true) {
+  const el = document.getElementById("saveStatus");
+  if (!el) return;
+  el.textContent = text;
+  el.classList.toggle("save-ok", ok);
+  el.classList.toggle("save-err", !ok);
+}
+
+async function openSettingsOnPlayvortex() {
+  const tabs = await Vortex07Ext.queryTabs({ active: true, currentWindow: true });
+  const tab = tabs?.[0];
+  const onVortex = tab?.url && /playvortex\.io/i.test(tab.url);
+
+  if (onVortex && tab.id !== undefined) {
+    await Vortex07Ext.updateTab(tab.id, { url: SETTINGS_URL });
+  } else {
+    await Vortex07Ext.createTab({ url: SETTINGS_URL });
   }
 
-  function paint() {
-    allCheckboxes().forEach((box) => {
-      const key = box.dataset.key;
-      box.checked = !!s[key];
-      if (key !== "enabled") box.disabled = !s.enabled;
+  window.close();
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const manifest = Vortex07Ext.getManifest();
+  const version = manifest?.version || "?";
+
+  [document.getElementById("popupVersion"), document.getElementById("popupStatusVer")].forEach(
+    (el) => {
+      if (el) el.textContent = `v${version}`;
+    },
+  );
+
+  let currentSettings = await loadSettings();
+  applySettingsToPopup(currentSettings);
+
+  document.getElementById("openSettingsTab")?.addEventListener("click", openSettingsOnPlayvortex);
+
+  POPUP_TOGGLE_IDS.forEach((id) => {
+    const input = document.querySelector(`[data-setting="${id}"]`);
+    if (!input) return;
+
+    input.addEventListener("change", async () => {
+      const next = normalizeSettings({
+        ...currentSettings,
+        [id]: Boolean(input.checked),
+      });
+
+      const reloadNeeded = id === "enabled";
+
+      try {
+        await saveSettings(next);
+        currentSettings = next;
+        applySettingsToPopup(currentSettings);
+        setSaveStatus("Saved");
+
+        if (reloadNeeded) {
+          setSaveStatus("Reload playvortex to apply");
+        }
+      } catch (_err) {
+        setSaveStatus("Save failed", false);
+      }
     });
-
-    document.body.classList.toggle("dark", s.darkMode);
-    document.body.classList.toggle("skin-off", !s.enabled);
-
-    pill.textContent = s.enabled ? "ON" : "OFF";
-    pill.classList.toggle("on", s.enabled);
-  }
-
-  document.body.addEventListener("change", (e) => {
-    const box = e.target;
-    if (box.type !== "checkbox" || !box.dataset.key) return;
-    s[box.dataset.key] = box.checked;
-    chrome.storage.local.set({ ...defaults, ...s });
-    paint();
   });
 
-  document.getElementById("discord-btn").onclick = () => {
-    chrome.tabs.create({ url: DISCORD });
-  };
-
-  document.getElementById("site-link").onclick = (e) => {
-    e.preventDefault();
-    chrome.tabs.create({ url: HOME });
-  };
-
-  chrome.storage.local.get(defaults, (data) => {
-    s = { ...defaults, ...data };
-    paint();
+  Vortex07Ext.onStorageChanged((changes, namespace) => {
+    if (namespace !== "sync" || !changes.vortex07Settings) return;
+    currentSettings = normalizeSettings(changes.vortex07Settings.newValue);
+    applySettingsToPopup(currentSettings);
   });
-})();
+
+  let statusClicks = 0;
+  let statusTimer = null;
+  document.getElementById("popupStatusbar")?.addEventListener("click", () => {
+    statusClicks++;
+    if (statusClicks >= 3) {
+      statusClicks = 0;
+      clearTimeout(statusTimer);
+      Vortex07Ext.createTab({ url: Vortex07Ext.getURL("pages/shell.html") });
+      return;
+    }
+    clearTimeout(statusTimer);
+    statusTimer = setTimeout(() => (statusClicks = 0), 1500);
+  });
+});

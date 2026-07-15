@@ -1,0 +1,115 @@
+/* 14 EXTENSION — Vertex Points wallet (header currency)     */
+/* --------------------------------------------------------- */
+
+html.vortex07-active .vortex07-vertex-wallet {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  margin-right: 6px;
+  padding: 1px 7px 1px 4px;
+  border: 1px solid #9a8cc4;
+  border-radius: 2px;
+  background: linear-gradient(#f6f3ff, #e4dcf7);
+  font: bold 11px Tahoma, "MS Sans Serif", Arial, sans-serif;
+  color: #4a3d72;
+  cursor: pointer;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+html.vortex07-active .vortex07-vertex-wallet:hover {
+  background: linear-gradient(#fbf9ff, #ece4fb);
+  border-color: #7b5ea7;
+}
+
+html.vortex07-active .vortex07-vertex-wallet:active {
+  background: #ded4f2;
+}
+
+html.vortex07-active .vortex07-vertex-coin {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+html.vortex07-active .vortex07-vertex-amount {
+  min-width: 14px;
+  text-align: right;
+  letter-spacing: 0.2px;
+}
+
+/* Daily bonus ready — soft pulse on the coin */
+html.vortex07-active .vortex07-vertex-wallet.vortex07-vertex-claimable {
+  border-color: #c9a227;
+  box-shadow: 0 0 0 1px rgba(201, 162, 39, 0.35);
+}
+
+html.vortex07-active
+  .vortex07-vertex-wallet.vortex07-vertex-claimable
+  .vortex07-vertex-coin {
+  animation: vortex07-vertex-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes vortex07-vertex-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: none;
+  }
+  50% {
+    transform: scale(1.18);
+    filter: drop-shadow(0 0 3px rgba(201, 162, 39, 0.8));
+  }
+}
+
+/* "+10 VP" burst after claiming */
+html.vortex07-active .vortex07-vertex-burst {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  transform: translateX(-50%);
+  padding: 1px 5px;
+  border: 1px solid #9a8cc4;
+  border-radius: 2px;
+  background: #f6f3ff;
+  color: #5c4a9e;
+  font: bold 10px Tahoma, "MS Sans Serif", Arial, sans-serif;
+  pointer-events: none;
+  animation: vortex07-vertex-burst-float 1.6s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes vortex07-vertex-burst-float {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -18px);
+  }
+}
+
+/* Dark mode */
+html.vortex07-active.vortex07-dark .vortex07-vertex-wallet {
+  background: linear-gradient(#3a3454, #2c2742);
+  border-color: #5c4a9e;
+  color: #cfc4f2;
+}
+
+html.vortex07-active.vortex07-dark .vortex07-vertex-wallet:hover {
+  background: linear-gradient(#453e63, #342e4e);
+  border-color: #7b5ea7;
+}
+
+html.vortex07-active.vortex07-dark .vortex07-vertex-burst {
+  background: #2c2742;
+  border-color: #5c4a9e;
+  color: #cfc4f2;
+}
