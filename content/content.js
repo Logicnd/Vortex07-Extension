@@ -148,7 +148,7 @@ const REPUTATION_PENDING_KEY = "vortex07ReputationPending";
 const GAME_VOTES_CACHE_KEY = "vortex07GameVotesCache";
 const GAME_MY_VOTES_KEY = "vortex07MyGameVotes";
 const GAME_COMMENTS_LOCAL_KEY = "vortex07GameCommentsLocal";
-const COMMUNITY_REPUTATION_API = "https://vortex07.vercel.app/api";
+const COMMUNITY_REPUTATION_API = "https://vortex07-extension.vercel.app/api";
 const VORTEX07_API_BASE = COMMUNITY_REPUTATION_API;
 const LEADERBOARD_CACHE_KEY = "vortex07LeaderboardCache";
 const STATUS_CACHE_KEY = "vortex07StatusCache";
@@ -1153,6 +1153,7 @@ function shouldProxyVortexApiUrl(url) {
   try {
     const parsed = new URL(String(url));
     if (parsed.protocol !== "https:") return false;
+    if (parsed.hostname === "vortex07-extension.vercel.app") return true;
     if (parsed.hostname === "vortex07.vercel.app") return true;
     return parsed.hostname.endsWith(".vercel.app") && parsed.pathname.startsWith("/api");
   } catch {

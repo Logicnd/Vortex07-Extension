@@ -2,7 +2,7 @@
 
 Backend for the Vortex07 Chrome extension — reputation, status lines, guestbook, activity feed, and more.
 
-**Production:** https://vortex07.vercel.app/api
+**Production:** https://vortex07-extension.vercel.app/api
 
 ## Quick start (automated)
 
@@ -71,6 +71,6 @@ npx vercel deploy --prod --yes
 
 ## Extension
 
-Default API base in the extension: `https://vortex07.vercel.app/api`
+Default API base in the extension: `https://vortex07-extension.vercel.app/api`
 
 Calls are proxied through the extension service worker to avoid page CORS.

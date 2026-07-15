@@ -219,7 +219,7 @@
                 type="text"
                 id="vortex07-reputationApiUrl"
                 data-setting="reputationApiUrl"
-                placeholder="Default: vortex07.vercel.app/api"
+                placeholder="Default: vortex07-extension.vercel.app/api"
                 spellcheck="false"
               />
               <p class="vortex07-settings-hint" id="vortex07-repApiHint">
@@ -418,7 +418,7 @@
     const url = String(settings.reputationApiUrl || "").trim();
     if (!url) {
       hint.textContent =
-        "Global rep sync: vortex07.vercel.app — shared by all Vortex07 users.";
+        "Global rep sync: vortex07-extension.vercel.app — shared by all Vortex07 users.";
       return;
     }
 

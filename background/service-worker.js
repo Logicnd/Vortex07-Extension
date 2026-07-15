@@ -22,7 +22,7 @@ const DISCORD_SYNC_INTERVAL_MINUTES = 15;
  */
 
 /** Only the canonical API host is allowed; no wildcard *.vercel.app. */
-const ALLOWED_API_HOSTS = new Set(["vortex07.vercel.app"]);
+const ALLOWED_API_HOSTS = new Set(["vortex07.vercel.app", "vortex07-extension.vercel.app"]);
 
 /** Must match VORTEX07_VOTE_SECRET on Vercel. */
 const VOTE_SECRET = "vortex07-vote-hmac-v2-5-0-playvortex";

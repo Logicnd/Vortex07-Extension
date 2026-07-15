@@ -6,7 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const serverDir = resolve(__dirname, "../../server");
 
 const baseUrl = String(
-  process.env.VORTEX07_API_URL || "https://vortex07.vercel.app/api",
+  process.env.VORTEX07_API_URL || "https://vortex07-extension.vercel.app/api",
 ).replace(/\/$/, "");
 
 const endpoints = [
