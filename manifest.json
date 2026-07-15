@@ -48,7 +48,6 @@
         "content/features/friends-carousel.js"
       ],
       "css": [
-        "styles/anti-fouc.css",
         "styles/features/friends-carousel.css"
       ],
       "run_at": "document_start"

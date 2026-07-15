@@ -330,10 +330,15 @@ function logError(...args) {
 function revealBody() {
   document.getElementById("vortex-2007-hide")?.remove();
   document.getElementById("vortex07-anti-fouc")?.remove();
-  document.documentElement.classList.remove("vortex07-loading");
+  const html = document.documentElement;
+  if (html) {
+    html.classList.remove("vortex07-loading");
+    html.style.visibility = "";
+    html.style.opacity = "";
+  }
   if (document.body) {
-    document.body.style.visibility = "visible";
-    document.body.style.opacity = "1";
+    document.body.style.visibility = "";
+    document.body.style.opacity = "";
   }
 }
 
