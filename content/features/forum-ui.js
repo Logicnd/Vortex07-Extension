@@ -330,28 +330,11 @@
     const op = posts.find((p) => p.isOp) || posts[0];
     if (!op) return [];
 
-    const byParent = new Map();
-    posts
+    const replies = posts
       .filter((p) => !p.isOp)
-      .forEach((post) => {
-        const pid = String(post.parentPostId || op.id);
-        if (!byParent.has(pid)) byParent.set(pid, []);
-        byParent.get(pid).push(post);
-      });
+      .sort((a, b) => (Number(a.createdAt) || 0) - (Number(b.createdAt) || 0));
 
-    for (const list of byParent.values()) {
-      list.sort((a, b) => (Number(a.createdAt) || 0) - (Number(b.createdAt) || 0));
-    }
-
-    const out = [{ post: op, depth: 0 }];
-    function walk(parentId, depth) {
-      for (const child of byParent.get(String(parentId)) || []) {
-        out.push({ post: child, depth });
-        walk(child.id, depth + 1);
-      }
-    }
-    walk(op.id, 0);
-    return out;
+    return [{ post: op, depth: 0 }, ...replies.map((post) => ({ post, depth: 0 }))];
   }
 
   function bindTopChromeNav(root, api) {
@@ -700,8 +683,7 @@
     const parts = [];
 
     if (canPost) {
-      parts.push(`<a href="#" class="vortex07-rbx-postlink" data-quote-post="${pid}">Quote</a>`);
-      parts.push(`<a href="#" class="vortex07-rbx-postlink" data-reply-to="${pid}">Reply</a>`);
+      parts.push(`<a href="#" class="vortex07-rbx-postlink vortex07-rbx-postlink-reply" data-reply-to-thread="${tid}">Reply to thread</a>`);
     }
 
     if (post.canLike) {
@@ -830,28 +812,15 @@
     const form = body.querySelector("#vortex07-forumReplyForm");
     const textarea = form?.querySelector("textarea");
     const banner = body.querySelector("#vortex07ForumReplyBanner");
-    const cancelBtn = body.querySelector("#vortex07ForumCancelReply");
-    const postEl = body.querySelector(`[data-post-id="${postId}"]`);
-    const authorName =
-      postEl?.querySelector(".vortex07-rbx-post-username")?.textContent?.trim() || "this post";
 
-    replyTargetPostId = postId || null;
-    if (form) form.dataset.parentId = postId || form.dataset.defaultParent || "";
+    replyTargetPostId = null;
+    if (form) form.dataset.parentId = form.dataset.defaultParent || "";
     if (banner) {
-      banner.hidden = !postId;
-      banner.innerHTML = postId
-        ? `Replying to <strong>${escapeHtml(authorName)}</strong>`
-        : "";
+      banner.hidden = false;
+      banner.textContent = "All replies are posted to the thread.";
     }
-    if (cancelBtn) cancelBtn.hidden = !postId;
     if (textarea) {
-      if (postId) {
-        textarea.placeholder = `Reply to ${authorName}…`;
-        textarea.focus();
-        form?.closest(".vortex07-rbx-reply-box")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      } else {
-        textarea.placeholder = "Write a reply…";
-      }
+      textarea.placeholder = "Write a reply to the thread…";
     }
   }
 
@@ -862,31 +831,18 @@
 
     bindCharCounter(body, "textarea", BODY_MAX);
 
-    body.querySelectorAll("[data-quote-post]").forEach((btn) => {
+    body.querySelectorAll("[data-reply-to-thread]").forEach((btn) => {
       btn.addEventListener("click", (event) => {
         event.preventDefault();
-        const postEl = body.querySelector(`[data-post-id="${btn.dataset.quotePost}"]`);
-        const text = postEl?.querySelector(".vortex07-rbx-post-body")?.textContent?.trim() || "";
-        const author =
-          postEl?.querySelector(".vortex07-rbx-post-username")?.textContent?.trim() || "user";
+        event.stopPropagation();
+        replyTargetPostId = null;
+        focusReplyComposer(root, "");
         const textarea = body.querySelector("#vortex07-forumReplyForm textarea");
-        focusReplyComposer(root, btn.dataset.quotePost || "");
         if (textarea) {
-          textarea.value = `[quote="${author}"]${text.slice(0, 400)}[/quote]\n\n`;
           textarea.focus();
+          textarea.closest(".vortex07-rbx-reply-box")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
       });
-    });
-
-    body.querySelectorAll("[data-reply-to]").forEach((btn) => {
-      btn.addEventListener("click", (event) => {
-        event.preventDefault();
-        focusReplyComposer(root, btn.dataset.replyTo || "");
-      });
-    });
-
-    body.querySelector("#vortex07ForumCancelReply")?.addEventListener("click", () => {
-      focusReplyComposer(root, "");
     });
 
     body.querySelectorAll("[data-like-post]").forEach((btn) => {
@@ -909,7 +865,7 @@
       const form = event.currentTarget;
       const hint = body.querySelector("#vortex07-forumReplyHint");
       const submit = form.querySelector(".vortex07-forum-submit");
-      const opId = form.dataset.parentId || form.dataset.defaultParent || "";
+      const opId = form.dataset.defaultParent || "";
 
       submit.disabled = true;
       const result = await api.replyToThread({
@@ -961,15 +917,14 @@
           canPost
             ? `<form class="vortex07-forum-form vortex07-forum-reply-form" id="vortex07-forumReplyForm" data-parent-id="${escapeHtml(opId)}" data-default-parent="${escapeHtml(opId)}">
           <fieldset class="vortex07-forum-group vortex07-rbx-reply-box">
-            <legend>Post Reply</legend>
-            <p class="vortex07-forum-reply-banner" id="vortex07ForumReplyBanner" hidden></p>
+            <legend>Post Reply to Thread</legend>
+            <p class="vortex07-forum-reply-banner" id="vortex07ForumReplyBanner">All replies are posted to the thread.</p>
             <label class="vortex07-forum-field">
               <span class="vortex07-forum-sr-only">Message</span>
-              <textarea name="body" maxlength="${BODY_MAX}" rows="4" required class="vortex07-forum-input" placeholder="Write a reply…"></textarea>
+              <textarea name="body" maxlength="${BODY_MAX}" rows="4" required class="vortex07-forum-input" placeholder="Write a reply to the thread…"></textarea>
             </label>
             <div class="vortex07-forum-form-actions">
               <button type="submit" class="vortex07-forum-submit vortex07-forum-action-btn">Post Reply</button>
-              <button type="button" class="vortex07-forum-cancel-reply" id="vortex07ForumCancelReply" hidden>Cancel reply</button>
             </div>
             <p class="vortex07-forum-hint" id="vortex07-forumReplyHint"></p>
           </fieldset>

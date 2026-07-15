@@ -394,6 +394,19 @@ html.vortex07-active .vortex07-rbx-postlink:hover {
   text-decoration: underline;
 }
 
+html.vortex07-active .vortex07-rbx-postlink-reply {
+  font-weight: 600;
+  padding: 2px 6px;
+  border: 1px solid var(--rbx-border-light);
+  background: linear-gradient(180deg, #fff 0%, #ece9d8 55%, #d4d0c8 100%);
+  color: var(--rbx-text);
+}
+
+html.vortex07-active .vortex07-rbx-postlink-reply:hover {
+  text-decoration: none;
+  background: linear-gradient(180deg, #fff 0%, #d8deea 100%);
+}
+
 html.vortex07-active .vortex07-rbx-postlink-sep {
   color: #bbb;
   font-size: 10px;
@@ -492,7 +505,7 @@ html.vortex07-active .vortex07-forum-group legend {
 html.vortex07-active .vortex07-forum-reply-banner {
   margin: 0 0 6px;
   padding: 4px 8px;
-  font: 10px Verdana, Tahoma, Arial, sans-serif;
+  font: 600 10px Verdana, Tahoma, Arial, sans-serif;
   color: var(--rbx-cat-dark);
   background: var(--rbx-user);
   border: 1px solid var(--rbx-border-light);
