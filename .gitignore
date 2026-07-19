@@ -6,6 +6,8 @@
 !popup/**
 !content/
 !content/**
+!src/
+!src/**
 !styles/
 !styles/**
 !assets/

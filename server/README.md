@@ -19,8 +19,9 @@ npm run api:verify   # smoke-test live API only
 ```
 api/
   api/index.js   → single Vercel function that routes /api/* requests
-  handlers/      → route handler modules
-  lib/           → shared store, CORS, rate limits
+  handler/       → route handler modules
+  store/         → persistent and in-memory data access
+  util/          → CORS, request auth, and rate limits
   vercel.json    → rewrites /api/* to api/index.js + CORS headers
   package.json
 ```

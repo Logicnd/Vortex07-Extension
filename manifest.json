@@ -25,31 +25,30 @@
         "http://localhost:5173/*"
       ],
       "js": [
-        "content/anti-fouc.js",
-        "content/lib/browser-api.js",
-        "content/lib/settings-schema.js",
-        "content/features/catalog-preview.js",
-        "content/lib/dom.js",
-        "content/lib/format.js",
-        "content/lib/avatar.js",
-        "content/features/settings-ui.js",
-        "content/content.js",
-        "content/features/hover.js",
-        "content/features/reputation.js",
-        "content/features/game-rating.js",
-        "content/features/social.js",
-        "content/features/guestbook.js",
-        "content/features/economy.js",
-        "content/features/forum-api.js",
-        "content/features/api-queue.js",
-        "content/features/forum-ui.js",
-        "content/layout.js",
-        "content/search.js",
-        "content/features/friends-carousel.js",
-        "content/rich-presence.js"
+        "src/boot.js",
+        "src/browser.js",
+        "src/settings.js",
+        "src/catalog.js",
+        "src/dom.js",
+        "src/format.js",
+        "src/avatar.js",
+        "src/panel.js",
+        "src/theme.js",
+        "src/hover.js",
+        "src/reputation.js",
+        "src/rating.js",
+        "src/social.js",
+        "src/guestbook.js",
+        "src/economy.js",
+        "src/forum.js",
+        "src/queue.js",
+        "src/layout.js",
+        "src/search.js",
+        "src/carousel.js",
+        "src/presence.js"
       ],
       "css": [
-        "styles/features/friends-carousel.css"
+        "styles/carousel.css"
       ],
       "run_at": "document_start"
     }
@@ -90,16 +89,14 @@
         "http://localhost:5173/*"
       ],
       "resources": [
-        "assets/icons/*",
-        "assets/badges/*",
+        "assets/icon/*",
+        "assets/badge/*",
         "assets/logo.png",
-        "assets/VertexCoin-64.png",
-        "assets/topbarbg.jpg",
-        "styles/styles.css",
-        "styles/retro-2007.css",
-        "styles/modules/*",
-        "styles/retro/*",
-        "styles/features/*"
+        "assets/coin.png",
+        "assets/topbar.jpg",
+        "styles/core.css",
+        "styles/retro.css",
+        "styles/*.css"
       ]
     }
   ]
