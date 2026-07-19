@@ -47,9 +47,6 @@
         "src/carousel.js",
         "src/presence.js"
       ],
-      "css": [
-        "styles/carousel.css"
-      ],
       "run_at": "document_start"
     }
   ],
@@ -94,9 +91,7 @@
         "assets/logo.png",
         "assets/coin.png",
         "assets/topbar.jpg",
-        "styles/core.css",
-        "styles/retro.css",
-        "styles/*.css"
+        "skin.css"
       ]
     }
   ]

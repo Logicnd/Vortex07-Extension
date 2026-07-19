@@ -252,28 +252,9 @@ function syncNativeSiteStylesheets(enabled) {
   ensureNativeAuthStylesheet();
 }
 
-function ensureForumStylesheet() {
-  const id = "vortex07-forum-css";
-  if (document.getElementById(id)) return Promise.resolve();
-
-  return new Promise((resolve) => {
-    const link = document.createElement("link");
-    link.id = id;
-    link.rel = "stylesheet";
-    link.href = extensionAssetUrl("styles/forum.css");
-    link.onload = () => resolve();
-    link.onerror = () => {
-      logError("Failed to load forum.css");
-      resolve();
-    };
-    document.documentElement.appendChild(link);
-  });
-}
-
 function syncThemeStylesheet(enabled) {
   const STYLE_SHEETS = [
-    { id: "vortex07-theme-css", path: "styles/core.css", label: "core.css" },
-    { id: "vortex07-retro-css", path: "styles/retro.css", label: "retro.css" },
+    { id: "vortex07-skin-css", path: "skin.css", label: "skin.css" },
   ];
 
   if (!enabled) {

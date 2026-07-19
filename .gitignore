@@ -8,8 +8,7 @@
 !content/**
 !src/
 !src/**
-!styles/
-!styles/**
+!skin.css
 !assets/
 !assets/**
 !scripts/

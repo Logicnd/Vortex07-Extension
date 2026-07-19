@@ -613,8 +613,6 @@ function showVortex07ForumPage() {
   const body = document.getElementById("Body");
   if (!body || !globalThis.Vortex07ForumUi) return;
 
-  void ensureForumStylesheet();
-
   hideVortex07ExtensionPages("vortex07-forum-page");
 
   let page = body.querySelector(".vortex07-forum-page");
