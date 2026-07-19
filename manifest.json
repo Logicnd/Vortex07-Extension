@@ -99,8 +99,7 @@
         "styles/retro-2007.css",
         "styles/modules/*",
         "styles/retro/*",
-        "styles/features/*",
-        "content/features/scary-myth.js"
+        "styles/features/*"
       ]
     }
   ]

@@ -236,9 +236,8 @@ function build2007Layout() {
     refreshShellAuthBanner();
     markActiveNavTab();
     if (!layoutGuardStarted) startLayoutGuard();
-    if (!window.__vortex07SettingsRouting)   startVortex07SettingsRouting();
-  runScaryMythEnhancements();
-  syncVortex07SettingsVisibility();
+    if (!window.__vortex07SettingsRouting) startVortex07SettingsRouting();
+    syncVortex07SettingsVisibility();
     syncAttackModeBanner();
     return;
   }
@@ -317,7 +316,6 @@ function build2007Layout() {
   enhanceLegacyStatusLabels();
   flattenCarousels();
   enhanceFriendsCarousels();
-  runScaryMythEnhancements();
   compressHeroSections();
   normalizeFriendTiles();
   normalizeProfileLayout();
@@ -333,7 +331,6 @@ function build2007Layout() {
   ensureVertexWallet();
   startLayoutGuard();
   startVortex07SettingsRouting();
-  runScaryMythEnhancements();
   syncVortex07SettingsVisibility();
 
   logDebug("2007 layout applied");
@@ -1202,7 +1199,6 @@ function runThrottledLayoutEnhancements() {
       flattenCarousels();
       normalizeFriendTiles();
       enhanceFriendsCarousels();
-      runScaryMythEnhancements();
       compressHeroSections();
       normalizeProfileLayout();
       normalizeAvatarImages();
