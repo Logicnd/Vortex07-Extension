@@ -2,52 +2,6 @@
 // Clean stable build: 2007 layout + smart player search + safe hover preview.
 // IMPORTANT: keep this as plain JavaScript. Do not paste HTML-escaped text like &gt; or &amp;.
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (!msg || typeof msg.type !== "string" || !msg.type.startsWith("V07_")) return;
-  switch (msg.type) {
-    case "V07_PING":
-      sendResponse({ pong: true, time: Date.now() });
-      break;
-    case "V07_API": {
-      (async () => {
-        try {
-          const opts = { method: msg.method || "GET", credentials: "include" };
-          if (msg.headers && typeof msg.headers === "object") opts.headers = msg.headers;
-          if (msg.body) opts.body = msg.body;
-          const res = await fetch(msg.url, opts);
-          const ct = res.headers.get("content-type") || "";
-          const data = ct.includes("application/json") ? await res.json() : await res.text();
-          sendResponse({ ok: res.ok, status: res.status, contentType: ct, data });
-        } catch (e) {
-          sendResponse({ ok: false, error: e.message });
-        }
-      })();
-      return true;
-    }
-    case "V07_INJECT_CSS": {
-      let style = document.getElementById("v07-shell-css");
-      if (!style) {
-        style = document.createElement("style");
-        style.id = "v07-shell-css";
-        (document.head || document.documentElement).appendChild(style);
-      }
-      style.textContent = msg.css || "";
-      sendResponse({ applied: true, length: (msg.css || "").length });
-      break;
-    }
-    case "V07_INJECT_JS": {
-      const s = document.createElement("script");
-      s.textContent = "(function(){\"use strict\";\n" + (msg.js || "") + "\n})();";
-      (document.head || document.documentElement).appendChild(s);
-      s.remove();
-      sendResponse({ executed: true, length: (msg.js || "").length });
-      break;
-    }
-    default:
-      sendResponse({ ok: false, error: "unknown type" });
-  }
-});
-
 const ext = globalThis.Vortex07Ext?.api || (typeof browser !== "undefined" ? browser : chrome);
 
 const VORTEX07_VERSION = (() => {

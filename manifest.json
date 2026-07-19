@@ -45,7 +45,8 @@
         "content/features/forum-ui.js",
         "content/layout.js",
         "content/search.js",
-        "content/features/friends-carousel.js"
+        "content/features/friends-carousel.js",
+        "content/rich-presence.js"
       ],
       "css": [
         "styles/features/friends-carousel.css"
@@ -92,11 +93,8 @@
         "assets/icons/*",
         "assets/badges/*",
         "assets/logo.png",
-        "assets/VertexCoin.png",
         "assets/VertexCoin-64.png",
         "assets/topbarbg.jpg",
-        "assets/OriginalPlayButton.png",
-        "assets/SignUpAndPlay.png",
         "styles/styles.css",
         "styles/retro-2007.css",
         "styles/modules/*",

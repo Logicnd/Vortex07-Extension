@@ -130,18 +130,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     currentSettings = normalizeSettings(changes.vortex07Settings.newValue);
     applySettingsToPopup(currentSettings);
   });
-
-  let statusClicks = 0;
-  let statusTimer = null;
-  document.getElementById("popupStatusbar")?.addEventListener("click", () => {
-    statusClicks++;
-    if (statusClicks >= 3) {
-      statusClicks = 0;
-      clearTimeout(statusTimer);
-      Vortex07Ext.createTab({ url: Vortex07Ext.getURL("pages/shell.html") });
-      return;
-    }
-    clearTimeout(statusTimer);
-    statusTimer = setTimeout(() => (statusClicks = 0), 1500);
-  });
 });
